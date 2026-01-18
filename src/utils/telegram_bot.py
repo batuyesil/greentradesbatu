@@ -1,0 +1,409 @@
+# -*- coding: utf-8 -*-
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Optional, Any, Dict, List
+
+from telegram import Bot, Update
+from telegram.constants import ParseMode
+from telegram.ext import Application, CommandHandler, ContextTypes
+from telegram.error import TelegramError
+
+from src.utils.logger import get_logger
+
+
+@dataclass
+class RuntimeState:
+    started: bool = False
+
+
+class TelegramNotifier:
+    def __init__(self, config):
+        self.config = config
+        self.logger = get_logger("telegram")
+
+        self.bot_token = config.get("telegram.bot_token")
+        self.chat_id = str(config.get("telegram.chat_id") or "")
+        self.enabled = bool(config.get("telegram.enabled", False))
+
+        # ekstra bildirim alacak chatler
+        self.additional_chat_ids = [
+            str(x) for x in (config.get("telegram.additional_chat_ids") or []) if str(x).strip()
+        ]
+
+        # gÃ¼venlik
+        self.authorized_users_only = bool(config.get("security.authorized_users_only", True))
+        self.authorized_users = set(
+            str(x) for x in (config.get("security.authorized_users") or []) if str(x).strip()
+        )
+        if self.chat_id:
+            self.authorized_users.add(self.chat_id)
+
+        self.bot: Optional[Bot] = None
+        self.application: Optional[Application] = None
+        self.core_bot: Optional[Any] = None
+        self.state = RuntimeState()
+
+        # stop/rebalance confirm
+        self._pending_confirm: Dict[str, bool] = {}
+
+    def attach_core(self, core_bot: Any):
+        self.core_bot = core_bot
+
+    async def start(self):
+        if not self.enabled:
+            self.logger.warning("Telegram devre dÄ±ÅŸÄ±")
+            return
+        if not self.bot_token:
+            self.logger.warning("Telegram bot_token eksik")
+            return
+        if not self.chat_id:
+            self.logger.warning("Telegram chat_id eksik")
+            return
+
+        try:
+            self.bot = Bot(token=self.bot_token)
+            self.application = Application.builder().token(self.bot_token).build()
+
+            self._register(self.application)
+
+            await self.application.initialize()
+            await self.application.start()
+
+            if not self.application.updater:
+                raise RuntimeError("Application.updater yok. python-telegram-bot sÃ¼rÃ¼mÃ¼nÃ¼ kontrol et.")
+            await self.application.updater.start_polling(drop_pending_updates=True)
+
+            self.state.started = True
+            self.logger.info("âœ… Telegram bot polling aktif")
+
+            # giriÅŸ mesajÄ±
+            await self.send_message(
+                "ğŸŸ¢ <b>GreenTrades Panel</b>\n"
+                "Komutlar hazÄ±r.\n\n"
+                "âš¡ /help ile menÃ¼yÃ¼ aÃ§."
+            )
+
+        except Exception as e:
+            self.logger.error(f"Telegram baÅŸlatma hatasÄ±: {e}", exc_info=True)
+
+    async def stop(self):
+        try:
+            if self.application:
+                if self.application.updater:
+                    await self.application.updater.stop()
+                await self.application.stop()
+                await self.application.shutdown()
+            self.state.started = False
+        except Exception as e:
+            self.logger.error(f"Telegram stop hatasÄ±: {e}", exc_info=True)
+
+    def _register(self, app: Application):
+        # temel
+        app.add_handler(CommandHandler("start", self.cmd_start))
+        app.add_handler(CommandHandler("help", self.cmd_help))
+
+        # bilgi
+        app.add_handler(CommandHandler("balance", self.cmd_balance))
+        app.add_handler(CommandHandler("stats", self.cmd_stats))
+        app.add_handler(CommandHandler("profit", self.cmd_profit))
+        app.add_handler(CommandHandler("positions", self.cmd_positions))
+        app.add_handler(CommandHandler("config", self.cmd_config))
+        app.add_handler(CommandHandler("status", self.cmd_status))
+        app.add_handler(CommandHandler("trades", self.cmd_trades))
+
+        # kontrol
+        app.add_handler(CommandHandler("pause", self.cmd_pause))
+        app.add_handler(CommandHandler("resume", self.cmd_resume))
+        app.add_handler(CommandHandler("stop", self.cmd_stop))
+        app.add_handler(CommandHandler("rebalance", self.cmd_rebalance))
+
+    def _is_authorized(self, update: Update) -> bool:
+        if not self.authorized_users_only:
+            return True
+        cid = str(update.effective_chat.id) if update.effective_chat else ""
+        return cid in self.authorized_users
+
+    async def _deny(self, update: Update):
+        if update.message:
+            await update.message.reply_text("âŒ Yetkin yok.")
+
+    async def _send_to(self, chat_id: str, text: str):
+        text = (text or "").strip()
+        if not text:
+            self.logger.warning("Telegram: boÅŸ mesaj gÃ¶nderimi engellendi (template boÅŸ geliyor olabilir).")
+            return
+        try:
+            await self.bot.send_message(
+                chat_id=chat_id,
+                text=text,
+                parse_mode=ParseMode.HTML,
+                disable_web_page_preview=True,
+            )
+        except TelegramError as e:
+            self.logger.error(f"Telegram mesaj hatasÄ±: {e}", exc_info=True)
+
+    async def send_message(self, text: str):
+        if not self.enabled or not self.bot:
+            return
+        await self._send_to(self.chat_id, text)
+        for cid in self.additional_chat_ids:
+            await self._send_to(cid, text)
+
+    async def send_error(self, error_msg: str):
+        await self.send_message(f"âš ï¸ <b>Hata</b>\n\n{error_msg}")
+
+    async def send_opportunity(self, opp: Dict[str, Any]):
+        template = self.config.get_template(
+            "opportunity_found",
+            coin=opp.get("coin", "-"),
+            spread=f"{float(opp.get('spread', 0)):.2f}",
+            buy_exchange=opp.get("buy_exchange", "-"),
+            sell_exchange=opp.get("sell_exchange", "-"),
+            buy_price=f"{float(opp.get('buy_price', 0)):.6f}",
+            sell_price=f"{float(opp.get('sell_price', 0)):.6f}",
+            estimated_profit=f"{float(opp.get('estimated_profit', 0)):.2f}",
+        )
+
+        # template boÅŸsa fallback (mesaj kesin gitsin)
+        if not template.strip():
+            template = (
+                "ğŸŸ¡ <b>FÄ±rsat</b>\n"
+                f"ğŸª™ {opp.get('coin','-')} | Spread: {float(opp.get('spread',0)):.2f}%\n"
+                f"ğŸ›’ {opp.get('buy_exchange','-')} @ {float(opp.get('buy_price',0)):.6f}\n"
+                f"ğŸ’¸ {opp.get('sell_exchange','-')} @ {float(opp.get('sell_price',0)):.6f}\n"
+            )
+
+        await self.send_message(template)
+
+    async def send_trade_executed(self, result: Dict[str, Any]):
+        template = self.config.get_template(
+            "trade_executed",
+            coin=result.get("coin", "-"),
+            spread=f"{float(result.get('spread', 0)):.2f}",
+            buy_exchange=result.get("buy_exchange", "-"),
+            sell_exchange=result.get("sell_exchange", "-"),
+            buy_price=f"{float(result.get('buy_price', 0)):.6f}",
+            sell_price=f"{float(result.get('sell_price', 0)):.6f}",
+            amount=f"{float(result.get('amount', 0)):.4f}",
+            profit=f"{float(result.get('profit', 0)):.2f}",
+            fees=f"{float(result.get('fees', 0)):.2f}",
+            net_profit=f"{float(result.get('net_profit', 0)):.2f}",
+            profit_percent=f"{float(result.get('profit_percent', 0)):.2f}",
+            execution_time=f"{float(result.get('execution_time', 0)):.2f}",
+        )
+
+        if not template.strip():
+            # fallback: brÃ¼t/net/fee net gÃ¶rÃ¼nsÃ¼n
+            template = (
+                "âœ… <b>Trade Completed</b>\n"
+                f"ğŸª™ {result.get('coin','-')} | Spread: {float(result.get('spread',0)):.2f}%\n"
+                f"ğŸ›’ {result.get('buy_exchange','-')} @ {float(result.get('buy_price',0)):.6f}\n"
+                f"ğŸ’¸ {result.get('sell_exchange','-')} @ {float(result.get('sell_price',0)):.6f}\n"
+                f"ğŸ’° Amount: ${float(result.get('amount',0)):.2f}\n\n"
+                f"ğŸ“ˆ Gross: ${float(result.get('profit',0)):.2f}\n"
+                f"ğŸ§¾ Fees:  ${float(result.get('fees',0)):.2f}\n"
+                f"ğŸ Net:   ${float(result.get('net_profit',0)):.2f} ({float(result.get('profit_percent',0)):.2f}%)\n"
+                f"â± {float(result.get('execution_time',0)):.2f}s"
+            )
+
+        await self.send_message(template)
+
+    def _require_core(self, update: Update) -> bool:
+        if not self.core_bot:
+            if update.message:
+                update.message.reply_text("âš ï¸ Core bot baÄŸlÄ± deÄŸil.")
+            return False
+        return True
+
+    async def _confirm_flow(self, update: Update, cmd: str) -> bool:
+        if not update.message:
+            return False
+
+        need_confirm = set(self.config.get("security.require_confirmation", []) or [])
+        if cmd not in need_confirm:
+            return True
+
+        if not self._pending_confirm.get(cmd, False):
+            self._pending_confirm[cmd] = True
+            await update.message.reply_text(f"âš ï¸ Onay: /{cmd} iÃ§in tekrar /{cmd} yaz.")
+            return False
+
+        self._pending_confirm[cmd] = False
+        return True
+
+    # ---------------- commands ----------------
+    async def cmd_start(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not self._is_authorized(update):
+            return await self._deny(update)
+
+        await update.message.reply_text(
+            "ğŸŸ¢ <b>GreenTrades</b>\n"
+            "Panel aktif.\n\n"
+            "âš¡ /help ile komutlar",
+            parse_mode=ParseMode.HTML
+        )
+
+    async def cmd_help(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not self._is_authorized(update):
+            return await self._deny(update)
+
+        help_text = (
+            "ğŸ§­ <b>GreenTrades Komutlar</b>\n\n"
+            "â–¶ï¸ /start       - Panel\n"
+            "ğŸ’° /balance     - Bakiye\n"
+            "ğŸ“Š /stats       - Ä°statistik\n"
+            "ğŸ’¹ /profit      - BrÃ¼t/Net/Komisyon\n"
+            "ğŸ“Œ /positions   - AÃ§Ä±k pozisyonlar\n"
+            "ğŸ§¾ /trades      - Son iÅŸlemler\n"
+            "ğŸŸ¢ /status      - Durum\n"
+            "âš™ï¸ /config      - Ayarlar\n\n"
+            "â¸ /pause       - Duraklat\n"
+            "â–¶ï¸ /resume      - Devam\n"
+            "ğŸ”„ /rebalance   - Rebalance\n"
+            "ğŸ›‘ /stop        - GÃ¼venli durdur\n"
+        )
+        await update.message.reply_text(help_text, parse_mode=ParseMode.HTML)
+
+    async def cmd_balance(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not self._is_authorized(update):
+            return await self._deny(update)
+        if not self._require_core(update):
+            return
+
+        total = await self.core_bot.balance_manager.get_total_balance()
+        await update.message.reply_text(
+            f"ğŸ’° <b>Bakiye</b>\nToplam: ${total:.2f}",
+            parse_mode=ParseMode.HTML
+        )
+
+    async def cmd_stats(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not self._is_authorized(update):
+            return await self._deny(update)
+        if not self._require_core(update):
+            return
+
+        s = getattr(self.core_bot, "stats", {}) or {}
+        await update.message.reply_text(
+            "ğŸ“Š <b>Ä°statistik</b>\n"
+            f"Toplam Ä°ÅŸlem: {s.get('total_trades', 0)}\n"
+            f"BaÅŸarÄ±lÄ±: {s.get('successful_trades', 0)}\n"
+            f"BaÅŸarÄ±sÄ±z: {s.get('failed_trades', 0)}\n"
+            f"Bulunan FÄ±rsat: {s.get('opportunities_found', 0)}\n"
+            f"Uygulanan: {s.get('opportunities_executed', 0)}\n"
+            f"Net Kar: ${float(s.get('total_profit', 0.0)):.2f}\n"
+            f"Komisyon: ${float(s.get('total_fees', 0.0)):.2f}",
+            parse_mode=ParseMode.HTML
+        )
+
+    async def cmd_profit(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not self._is_authorized(update):
+            return await self._deny(update)
+        if not self._require_core(update):
+            return
+
+        s = getattr(self.core_bot, "stats", {}) or {}
+        net = float(s.get("total_profit", 0.0))
+        fees = float(s.get("total_fees", 0.0))
+        gross = net + fees
+        await update.message.reply_text(
+            "ğŸ’¹ <b>Kar/Zarar</b>\n"
+            f"ğŸ“ˆ BrÃ¼t: ${gross:.2f}\n"
+            f"ğŸ§¾ Komisyon: ${fees:.2f}\n"
+            f"ğŸ Net: ${net:.2f}",
+            parse_mode=ParseMode.HTML
+        )
+
+    async def cmd_positions(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not self._is_authorized(update):
+            return await self._deny(update)
+        await update.message.reply_text("ğŸ“Œ AÃ§Ä±k pozisyon: (spot arbitrajda genelde pozisyon tutulmaz)")
+
+    async def cmd_trades(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not self._is_authorized(update):
+            return await self._deny(update)
+        await update.message.reply_text("ğŸ§¾ Son iÅŸlemler: (DB log baÄŸlanÄ±nca gerÃ§ek liste gelecek)")
+
+    async def cmd_status(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not self._is_authorized(update):
+            return await self._deny(update)
+        if not self._require_core(update):
+            return
+
+        st = self.core_bot.get_status()
+        await update.message.reply_text(
+            "ğŸŸ¢ <b>Durum</b>\n"
+            f"Status: {st.get('status')}\n"
+            f"Mode: {st.get('mode')}\n"
+            f"Runtime(h): {float(st.get('runtime_hours', 0)):.2f}\n"
+            f"Aktif Strateji: {st.get('active_strategies', 0)}\n"
+            f"Borsa: {st.get('connected_exchanges', 0)}",
+            parse_mode=ParseMode.HTML
+        )
+
+    async def cmd_config(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not self._is_authorized(update):
+            return await self._deny(update)
+
+        exchanges = self.config.get("exchanges.enabled", []) or []
+        min_spread = self.config.get("strategy.spot_arbitrage.min_spread_percent", None)
+        mode = self.config.get("mode", "-")
+        await update.message.reply_text(
+            "âš™ï¸ <b>Config</b>\n"
+            f"Mode: {mode}\n"
+            f"Borsalar: {', '.join(exchanges)}\n"
+            f"Min Spread: {min_spread}",
+            parse_mode=ParseMode.HTML
+        )
+
+    async def cmd_pause(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not self._is_authorized(update):
+            return await self._deny(update)
+        if not self._require_core(update):
+            return
+
+        self.core_bot.is_paused = True
+        await update.message.reply_text("â¸ Bot duraklatÄ±ldÄ±.")
+
+    async def cmd_resume(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not self._is_authorized(update):
+            return await self._deny(update)
+        if not self._require_core(update):
+            return
+
+        self.core_bot.is_paused = False
+        await update.message.reply_text("â–¶ï¸ Bot devam ediyor.")
+
+    async def cmd_rebalance(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not self._is_authorized(update):
+            return await self._deny(update)
+        if not self._require_core(update):
+            return
+
+        ok = await self._confirm_flow(update, "rebalance")
+        if not ok:
+            return
+
+        bm = getattr(self.core_bot, "balance_manager", None)
+        fn = getattr(bm, "rebalance", None) if bm else None
+        if callable(fn):
+            await fn()
+            await update.message.reply_text("ğŸ”„ Rebalance baÅŸlatÄ±ldÄ±.")
+        else:
+            await update.message.reply_text("ğŸ”„ Rebalance: balance_manager.rebalance() yok (placeholder).")
+
+    async def cmd_stop(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not self._is_authorized(update):
+            return await self._deny(update)
+        if not self._require_core(update):
+            return
+
+        ok = await self._confirm_flow(update, "stop")
+        if not ok:
+            return
+
+        await self.core_bot.stop()
+        await update.message.reply_text("ğŸ›‘ Bot durduruluyor (gÃ¼venli Ã§Ä±kÄ±ÅŸ).")
+
+
+

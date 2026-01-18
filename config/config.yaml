@@ -1,0 +1,312 @@
+# GreenTrades - Ana Konfigürasyon
+# Bu dosyayı ihtiyacına göre düzenle
+
+# ========================================
+# GENEL AYARLAR
+# ========================================
+
+# Çalışma Modu
+# "fake_money" = Test modu (sanal para)
+# "real_money" = Gerçek mod (DİKKATLİ!)
+mode: "fake_money"
+
+# ========================================
+# BAKİYE AYARLARI
+# ========================================
+
+balance:
+  # ========================================
+  # FAKE MONEY AYARLARI (Test Modu)
+  # ========================================
+  fake_money:
+    total: 250              # Toplam başlangıç: $1000
+    per_exchange: "auto"     # "auto" = eşit dağıt, VEYA manuel (örn: 200)
+    currency: "USDT"         # Ana para birimi
+  
+  # ========================================
+  # REAL MONEY AYARLARI (Gerçek Mod)
+  # ========================================
+  real_money:
+    # Kullanılacak toplam miktar
+    # 0 = API'deki tüm USDT'yi kullan
+    # 1000 = Sadece $1000 kullan (bakiyede 5000 olsa bile)
+    total: 0
+    
+    # Alternatif: Yüzde olarak
+    use_percentage: true     # true = yüzde kullan, false = total kullan
+    percentage: 80           # API bakiyesinin %80'ini kullan
+    
+    # Her borsa için minimum reserve (dokunma)
+    min_reserve_per_exchange: 50   # Her borsada en az $50 bırak
+    
+    # Maksimum kullanım limiti (güvenlik için)
+    max_total_usage: 10000   # Max $10,000 kullan (0 = limitsiz)
+  
+  # ========================================
+  # GENEL AYARLAR
+  # ========================================
+  # Risk yönetimi için toplam bakiyenin kaçı aktif olsun
+  active_utilization: 80     # %80 aktif, %20 reserve
+  
+  # Coin başına maksimum allocation
+  max_per_coin_percent: 20   # Bir coinde max bakiyenin %20'si
+
+# ========================================
+# BORSA AYARLARI
+# ========================================
+
+exchanges:
+  # Kullanılacak borsalar (config/exchanges.yaml'dan yüklenir)
+  enabled:
+   # - mexc
+   # - gateio
+   # - kucoin
+    - bybit
+    - okx
+   # - binance
+  
+  # Orderbook refresh rate (saniye)
+  orderbook_refresh: 1
+  
+  # WebSocket kullan (daha hızlı)
+  use_websocket: true
+  
+  # Rate limiting (borsaları korumak için)
+  rate_limit: true
+  max_requests_per_second: 10
+
+# ========================================
+# COIN AYARLARI
+# ========================================
+
+coins:
+  # Takip edilecek coinler (öncelik sırasına göre)
+  # Mid-cap altcoinler - yüksek spread potansiyeli
+  priority_list:
+    # Gaming & Metaverse
+    - GALA/USDT
+    - SAND/USDT
+    - MANA/USDT
+    - AXS/USDT
+    - IMX/USDT
+    
+    # Layer 2
+    - MATIC/USDT
+    - ARB/USDT
+    - OP/USDT
+    - METIS/USDT
+    
+    # DeFi
+    - LDO/USDT
+    - UNI/USDT
+    - AAVE/USDT
+    - CRV/USDT
+    
+    # Infrastructure
+    - FIL/USDT
+    - AR/USDT
+    - GRT/USDT
+    
+    # Trending
+    - APE/USDT
+    - BLUR/USDT
+    - PEPE/USDT
+  
+  # Filtreler
+  filters:
+    # Minimum 24h volume (USD)
+    min_volume_24h: 500000  # $500k
+    
+    # Minimum market cap
+    min_market_cap: 50000000  # $50M
+    
+    # Maksimum coin sayısı (aynı anda)
+    max_active_coins: 10
+    
+    # En az kaç borsada olmalı
+    min_exchanges: 3
+
+# ========================================
+# STRATEJİ AYARLARI
+# ========================================
+
+strategy:
+  # Ana strateji: Spot Arbitrage
+  spot_arbitrage:
+    enabled: true
+    min_spread_percent: 0.1  # %0.8 minimum spread
+    max_spread_percent: 10   # %10'dan fazlası suspect
+    priority: 1
+  
+  # İkincil: Triangular Arbitrage
+  triangular_arbitrage:
+    enabled: true
+    min_profit_percent: 0.5  # %0.5 minimum kar
+    priority: 2
+  
+  # Üçüncül: Statistical Arbitrage
+  statistical_arbitrage:
+    enabled: false  # İleri seviye, şimdilik kapalı
+    priority: 3
+
+# ========================================
+# RİSK YÖNETİMİ
+# ========================================
+
+risk_management:
+  # Günlük limitler
+  max_daily_loss: 50           # Maksimum $50 günlük zarar
+  max_daily_trades: 100        # Maksimum 100 işlem/gün
+  
+  # Pozisyon limitleri
+  max_position_per_coin: 300   # Coin başına max $300
+  max_total_exposure: 2000     # Toplam max $2000 pozisyon
+  
+  # Stop-loss ayarları
+  stop_loss_percent: 5         # %5 stop-loss
+  trailing_stop: true          # Trailing stop aktif
+  
+  # Diversifikasyon
+  max_allocation_per_coin: 20  # Bakiyenin max %20'si bir coinde
+  
+  # Volatilite kontrolü
+  pause_on_high_volatility: true
+  volatility_threshold: 10     # %10'dan fazla volatilite = duraklat
+
+# ========================================
+# EXECUTION AYARLARI
+# ========================================
+
+execution:
+  # İşlem tipi
+  order_type: "limit"  # "limit" veya "market"
+  
+  # Limit order timeout (saniye)
+  limit_order_timeout: 10
+  
+  # Slippage toleransı (%)
+  max_slippage: 0.5
+  
+  # Minimum kar marjı (komisyonlar sonrası, %)
+  min_profit_after_fees: 0.3
+  
+  # Paralel işlem sayısı
+  max_concurrent_trades: 3
+  
+  # İşlem gecikme limiti (saniye)
+  max_execution_delay: 2
+
+# ========================================
+# REBALANCING
+# ========================================
+
+rebalancing:
+  # Otomatik rebalance
+  enabled: true
+  
+  # Rebalance aralığı (saat)
+  interval_hours: 6
+  
+  # Minimum dengesizlik (%)
+  min_imbalance_percent: 10
+  
+  # Rebalance method
+  method: "proportional"  # "proportional" veya "equal"
+
+# ========================================
+# LOGGING VE MONİTORİNG
+# ========================================
+
+logging:
+  # Log seviyesi: DEBUG, INFO, WARNING, ERROR
+  level: "INFO"
+  
+  # Log dosyası rotasyonu
+  rotation: "daily"
+  max_file_size: "10MB"
+  retention_days: 30
+  
+  # Console output
+  console_output: true
+  colored_output: true
+  
+  # Detaylı trade logging
+  detailed_trade_logs: true
+
+monitoring:
+  # Performance tracking
+  track_performance: true
+  
+  # Günlük rapor
+  daily_report: true
+  report_time: "20:00"  # Saat 20:00'de günlük rapor
+  
+  # Haftalık rapor
+  weekly_report: true
+  weekly_report_day: "Sunday"
+
+# ========================================
+# GELİŞMİŞ AYARLAR
+# ========================================
+
+advanced:
+  # Cache kullan (hız için)
+  use_cache: true
+  cache_ttl: 60  # saniye
+  
+  # Backtesting modu
+  backtesting: false
+  
+  # Paper trading (gerçek veri, fake işlemler)
+  paper_trading: false
+  
+  # Database ayarları
+  database:
+    type: "sqlite"
+    path: "data/greentrades.db"
+    backup_enabled: true
+    backup_interval_hours: 24
+  
+  # API timeout (saniye)
+  api_timeout: 30
+  
+  # Retry ayarları
+  max_retries: 3
+  retry_delay: 2  # saniye
+  
+  # Emergency stop conditions
+  emergency_stop:
+    enabled: true
+    max_consecutive_losses: 5
+    max_loss_percent_24h: 10  # %10 kayıp = durdur
+
+# ========================================
+# NOTLAR
+# ========================================
+
+notes: |
+  GreenTrades Konfigürasyon Dosyası
+  
+  İLK KULLANIM:
+  1. mode: "fake_money" olarak başla
+  2. Telegram ayarlarını yap (config/telegram.yaml)
+  3. Borsa API'lerini ayarla (config/exchanges.yaml)
+  4. Test et: python main.py
+  
+  GERÇEK PARAYA GEÇERKEN:
+  1. En az 1-2 ay fake_money test yap
+  2. API anahtarlarını doğru gir
+  3. Küçük bakiye ile başla ($100-500)
+  4. mode: "real_money" olarak değiştir
+  5. Risk yönetimi ayarlarını gözden geçir
+  
+  GÜVENLİK:
+  - API anahtarlarında Withdrawal yetkisi KAPALI olmalı!
+  - Sadece Spot Trading yetkisi ver
+  - IP Whitelist kullan
+  - 2FA aktif et
+  
+  DESTEK:
+  - Telegram: /help komutu
+  - Loglar: logs/ klasörü
+  - Dokümantasyon: README.md

@@ -1,0 +1,324 @@
+# GreenTrades - Borsa API Ayarları
+# UYARI: Bu dosyayı asla paylaşma! (.gitignore'a ekle)
+
+# ========================================
+# MEXC (En çok altcoin - ÖNEMLİ!)
+# ========================================
+mexc:
+  enabled: true
+  
+  # API Anahtarları (mexc.com > API Management)
+  apiKey: ""  # Buraya API Key gir
+  secret: ""  # Buraya Secret gir
+  
+  # Ayarlar
+  sandbox: false  # Test için true yap
+  testnet_url: "https://contract.mexc.com"
+  
+  # Özellikler
+  features:
+    spot: true
+    futures: false
+    websocket: true
+  
+  # Komisyonlar
+  fees:
+    maker: 0.0000  # Maker fee genelde 0
+    taker: 0.0020  # %0.20 taker fee
+  
+  notes: |
+    MEXC en çok altcoin'e sahip borsa
+    Yeni listingler için ideal
+    VIP 0: Taker %0.20, Maker %0.00
+
+# ========================================
+# GATE.IO (Erken listingler)
+# ========================================
+gateio:
+  enabled: true
+  
+  # API Anahtarları (gate.io > API Keys)
+  apiKey: ""
+  secret: ""
+  
+  # Ayarlar
+  sandbox: false
+  testnet_url: "https://fx-api-testnet.gateio.ws"
+  
+  features:
+    spot: true
+    futures: false
+    websocket: true
+  
+  fees:
+    maker: 0.0020
+    taker: 0.0020
+  
+  notes: |
+    Erken listing platformu
+    Arbitraj için ideal
+    VIP 0: %0.20 komisyon
+
+# ========================================
+# KUCOIN (İyi likidite)
+# ========================================
+kucoin:
+  enabled: true
+  
+  # API Anahtarları (kucoin.com > API Management)
+  apiKey: ""
+  secret: ""
+  password: ""  # KuCoin için passphrase gerekli!
+  
+  sandbox: false
+  testnet_url: "https://openapi-sandbox.kucoin.com"
+  
+  features:
+    spot: true
+    futures: false
+    websocket: true
+  
+  fees:
+    maker: 0.0010
+    taker: 0.0010
+  
+  notes: |
+    İyi likidite
+    Düşük komisyon
+    Passphrase gerektirir!
+
+# ========================================
+# BYBIT (Popüler altcoinler)
+# ========================================
+bybit:
+  enabled: true
+  
+  # API Anahtarları (bybit.com > API)
+  apiKey: ""
+  secret: ""
+  
+  sandbox: false
+  testnet_url: "https://api-testnet.bybit.com"
+  
+  features:
+    spot: true
+    futures: true  # Funding rate arbitrage için
+    websocket: true
+  
+  fees:
+    maker: 0.0010
+    taker: 0.0010
+  
+  notes: |
+    Popüler altcoinler
+    Futures desteği
+    Funding rate arbitrage
+
+# ========================================
+# OKX (Geniş seçim)
+# ========================================
+okx:
+  enabled: true
+  
+  # API Anahtarları (okx.com > API)
+  apiKey: ""
+  secret: ""
+  password: ""  # OKX için passphrase gerekli!
+  
+  sandbox: false
+  testnet_url: "https://www.okx.com"
+  
+  features:
+    spot: true
+    futures: false
+    websocket: true
+  
+  fees:
+    maker: 0.0008
+    taker: 0.0010
+  
+  notes: |
+    Geniş coin seçimi
+    Düşük komisyon
+    Passphrase gerektirir!
+
+# ========================================
+# BINANCE (Referans borsa)
+# ========================================
+binance:
+  enabled: true
+  
+  # API Anahtarları (binance.com > API Management)
+  apiKey: ""
+  secret: ""
+  
+  sandbox: false
+  testnet_url: "https://testnet.binance.vision"
+  
+  features:
+    spot: true
+    futures: false
+    websocket: true
+  
+  fees:
+    maker: 0.0010
+    taker: 0.0010
+  
+  notes: |
+    En büyük borsa
+    Referans fiyatlar
+    BNB ile %25 indirim
+
+# ========================================
+# API AYARLARI (Tüm Borsalar İçin)
+# ========================================
+
+global_settings:
+  # API istekleri için timeout (saniye)
+  timeout: 30
+  
+  # Rate limiting
+  rate_limit: true
+  requests_per_second: 10
+  
+  # Retry ayarları
+  max_retries: 3
+  retry_delay: 2
+  
+  # WebSocket ayarları
+  websocket:
+    enabled: true
+    ping_interval: 20
+    ping_timeout: 10
+    reconnect_delay: 5
+  
+  # Proxy (gerekirse)
+  proxy:
+    enabled: false
+    http: ""
+    https: ""
+
+# ========================================
+# GÜVENLİK NOTLARI
+# ========================================
+
+security_notes: |
+  KRİTİK GÜVENLİK TAVSİYELERİ:
+  
+  1. API YETKİLERİ:
+      Spot Trading - Gerekli
+      Read - Gerekli
+      Withdrawal - ASLA AÇMA!
+      Margin Trading - Gerekmedikçe açma
+  
+  2. IP WHİTELİST:
+     - Mümkünse IP whitelist kullan
+     - Sadece VPS/bilgisayar IP'sini ekle
+  
+  3. 2FA:
+     - Tüm borsalarda 2FA aktif olmalı
+     - Google Authenticator kullan
+  
+  4. API ANAHTARI GÜVENLİĞİ:
+     - Asla kimseyle paylaşma
+     - GitHub'a YÜKLEME!
+     - .gitignore'a ekle
+     - Düzenli olarak yenile
+  
+  5. TEST MODU:
+     - İlk test için sandbox: true yap
+     - Testnet API anahtarları kullan
+     - Gerçek paraya geçmeden önce iyice test et
+  
+  6. FAKE MONEY:
+     - API anahtarları BOŞ olabilir
+     - Bot sadece fiyat verilerini okur
+     - Gerçek işlem yapmaz
+
+# ========================================
+# API ANAHTAR OLUŞTURMA REHBERİ
+# ========================================
+
+how_to_create_api_keys: |
+  MEXC:
+  1. mexc.com > Hesap > API Management
+  2. Create API Key
+  3. İzinler: Spot Trading + Read
+  4. IP Whitelist (opsiyonel)
+  
+  GATE.IO:
+  1. gate.io > Account > API Keys
+  2. Create API Key
+  3. İzinler: Spot Trading
+  4. 2FA ile onayla
+  
+  KUCOIN:
+  1. kucoin.com > API Management
+  2. Create API
+  3. Passphrase belirle (KAYDET!)
+  4. İzinler: General + Trade
+  
+  BYBIT:
+  1. bybit.com > API
+  2. Create New Key
+  3. İzinler: Read-Write
+  4. IP Whitelist (önerilir)
+  
+  OKX:
+  1. okx.com > Trade > API
+  2. Create API Key
+  3. Passphrase belirle (KAYDET!)
+  4. İzinler: Trade
+  
+  BINANCE:
+  1. binance.com > API Management
+  2. Create API
+  3. İzinler: Enable Spot Trading
+  4. IP Access: Unrestricted (veya whitelist)
+
+# ========================================
+# TESTNET URL'LERİ
+# ========================================
+
+testnet_info: |
+  TEST İÇİN TESTNET KULLAN:
+  
+  Binance Testnet:
+  - URL: https://testnet.binance.vision
+  - Fake BTC/USDT alabilirsin
+  - API anahtarı: Testnet hesabı gerekli
+  
+  Bybit Testnet:
+  - URL: https://testnet.bybit.com
+  - Fake para otomatik yüklenir
+  
+  NOT: Tüm borsaların testnet'i yok!
+  MEXC, Gate.io, KuCoin için:
+  - Fake money modunu kullan
+  - Gerçek API verileri okur ama işlem yapmaz
+
+# ========================================
+# FAKE MONEY MODU İÇİN
+# ========================================
+
+fake_money_note: |
+  FAKE MONEY MODU:
+  
+  API anahtarları gerekmiyor!
+  Bot sadece şunları yapar:
+  - Fiyat verilerini okur (public API)
+  - Spread hesaplar
+  - Sanal işlemler yapar
+  - Kar/zarar simüle eder
+  
+  Kullanım:
+  1. Bu dosyayı BOŞ BIRAK
+  2. config.yaml'da mode: "fake_money"
+  3. python main.py
+  4. Bot çalışacak ama gerçek işlem yapmayacak
+  
+  Avantajlar:
+  - Risk yok
+  - API anahtarı gerektirmiyor
+  - Gerçek piyasa verileri
+  - Strateji testi için ideal

@@ -1,0 +1,318 @@
+# GreenTrades - Telegram Bot Ayarları
+
+# ========================================
+# TELEGRAM BOT AYARLARI
+# ========================================
+
+telegram:
+  enabled: true
+  bot_token: "8561954712:AAFFnE4EtmJRdY_A5vHgSQivqSpqxan2cL8"
+  chat_id: "1583934598"
+  additional_chat_ids:
+    - "7930120816"
+
+# ========================================
+# BİLDİRİM AYARLARI
+# ========================================
+
+notifications:
+  trade_executed: true
+  opportunity_found: true
+  opportunity_min_spread: 0.8
+
+  daily_report: true
+  daily_report_time: "20:00"
+  weekly_report: true
+  weekly_report_day: "Sunday"
+  monthly_report: true
+
+  profit_milestone: true
+  profit_milestones: [100, 250, 500, 1000]
+
+  loss_alert: true
+  loss_alert_threshold: 20
+
+  error_alerts: true
+  critical_errors_only: false
+
+  bot_started: true
+  bot_stopped: true
+  rebalance_completed: true
+  emergency_stop: true
+
+# ========================================
+# BİLDİRİM FORMATLARI
+# ========================================
+
+message_formats:
+  use_emojis: true
+  language: "tr"
+  detail_level: "medium"
+  price_decimals: 2
+  percentage_decimals: 2
+
+# ========================================
+# BOT KOMUTLARI
+# ========================================
+
+commands:
+  - command: "start"
+    description: "Botu başlat ve durum göster"
+    enabled: true
+
+  - command: "stop"
+    description: "Botu güvenli şekilde durdur"
+    enabled: true
+    confirmation_required: true
+
+  - command: "pause"
+    description: "Botu geçici duraklat"
+    enabled: true
+
+  - command: "resume"
+    description: "Botu devam ettir"
+    enabled: true
+
+  - command: "balance"
+    description: "Bakiye bilgisi"
+    enabled: true
+
+  - command: "stats"
+    description: "İstatistikler"
+    enabled: true
+
+  - command: "profit"
+    description: "Kar/zarar özeti"
+    enabled: true
+
+  - command: "positions"
+    description: "Açık pozisyonlar"
+    enabled: true
+
+  - command: "trades"
+    description: "Son işlemler"
+    enabled: true
+    max_trades_shown: 10
+
+  - command: "rebalance"
+    description: "Manuel rebalance başlat"
+    enabled: true
+    confirmation_required: true
+
+  - command: "config"
+    description: "Aktif ayarları göster"
+    enabled: true
+
+  - command: "status"
+    description: "Bot durumu detaylı"
+    enabled: true
+
+  - command: "help"
+    description: "Yardım menüsü"
+    enabled: true
+
+# ========================================
+# GÜVENLİK AYARLARI
+# ========================================
+
+security:
+  authorized_users_only: true
+  authorized_users:
+    - "1583934598"
+
+  require_confirmation:
+    - "stop"
+    - "rebalance"
+    - "emergency_stop"
+
+  rate_limit_enabled: true
+  max_commands_per_minute: 20
+
+# ========================================
+# MESAJ ŞABLONLARI (Türkçe)
+# ========================================
+
+message_templates:
+  bot_started: |
+    <b>GreenTrades Başlatıldı</b>
+
+    Mod: {mode}
+    Bakiye: ${balance}
+    Borsalar: {exchanges}
+    Coinler: {coins}
+
+    Bot aktif ve fırsatları tarıyor...
+
+  opportunity_found: |
+    <b>Fırsat Bulundu!</b>
+
+    Coin: {coin}
+    Spread: {spread}%
+
+    Alış: {buy_exchange} - ${buy_price}
+    Satış: {sell_exchange} - ${sell_price}
+
+    Tahmini Kar: ${estimated_profit}
+    Analiz ediliyor...
+
+    trade_executed: |
+    <b>İşlem Tamamlandı</b>
+
+    {coin}
+    Spread: {spread}%
+
+    Alış: {buy_exchange}
+    Fiyat: ${buy_price}
+    Miktar: ${amount}  (qty: {qty})
+
+    Satış: {sell_exchange}
+    Fiyat: ${sell_price}
+
+    Brüt Kar: ${gross_profit}
+    Komisyon: ${fees}
+    Net Kar: ${profit} ({profit_percent}%)
+    ⏱ Süre: {execution_time}sn
+
+  daily_report: |
+    <b>GreenTrades Günlük Rapor</b>
+    {date}
+
+    <b>Bakiye Özeti</b>
+    Başlangıç: ${starting_balance}
+    Mevcut: ${current_balance}
+    Değişim: {change} ({change_percent}%)
+
+    <b>İşlem İstatistikleri</b>
+    Toplam İşlem: {total_trades}
+    Başarılı: {successful_trades} ({success_rate}%)
+    Başarısız: {failed_trades}
+
+    <b>Kar/Zarar</b>
+    Brüt Kar: ${gross_profit}
+    Komisyonlar: ${fees}
+    Net Kar: ${net_profit}
+
+    <b>En İyi Performans</b>
+    En Karlı Coin: {best_coin} (+${best_profit})
+    En Karlı Borsa: {best_exchange}
+    Ortalama Spread: {avg_spread}%
+
+    <b>Risk Metrikleri</b>
+    Maks Pozisyon: ${max_position}
+    Toplam Exposure: ${total_exposure}
+    Günlük Drawdown: {drawdown}%
+
+    Yarın için hazırız!
+
+  weekly_report: |
+    <b>GreenTrades Haftalık Rapor</b>
+    {week_start} - {week_end}
+
+    <b>Haftalık Özet</b>
+    Başlangıç: ${starting_balance}
+    Bitiş: ${ending_balance}
+    Net Kar: ${weekly_profit} ({weekly_profit_percent}%)
+
+    <b>İşlem Analizi</b>
+    Toplam İşlem: {total_trades}
+    Günlük Ortalama: {avg_trades_per_day}
+    Başarı Oranı: {success_rate}%
+
+    <b>Performans</b>
+    En İyi Gün: {best_day} (+${best_day_profit})
+    En Kötü Gün: {worst_day} ({worst_day_loss})
+    Ortalama Günlük: ${avg_daily_profit}
+
+    <b>Top 3 Coinler</b>
+    1. {top1_coin}: +${top1_profit}
+    2. {top2_coin}: +${top2_profit}
+    3. {top3_coin}: +${top3_profit}
+
+    Güzel bir hafta geçirdik!
+
+  error_alert: |
+    <b>Hata Tespit Edildi</b>
+
+    Tip: {error_type}
+    Mesaj: {error_message}
+    Konum: {location}
+    ⏰ Zaman: {timestamp}
+
+    Otomatik retry: {retry_count}/3
+
+  emergency_stop: |
+    <b>ACİL DURUM DURDURMA</b>
+
+    Sebep: {reason}
+    Mevcut Bakiye: ${balance}
+    Kayıp: ${loss}
+
+    Bot güvenli bir şekilde durduruldu.
+    Lütfen durumu kontrol edin!
+
+# ========================================
+# BOT TOKEN NASIL ALINIR?
+# ========================================
+
+how_to_get_bot_token: |
+  TELEGRAM BOT TOKEN ALMA:
+
+  1. Telegram'da @BotFather'ı aç
+  2. /newbot komutunu gönder
+  3. Bot için bir isim belirle:
+     Örnek: "GreenTrades Bot"
+  4. Bot için kullanıcı adı belirle:
+     Örnek: "greentradesbot" veya "your_name_bot"
+     (Mutlaka "bot" ile bitmeli)
+  5. BotFather sana bir TOKEN verecek:
+     Örnek: 123456789:ABCdefGHIjklMNOpqrsTUVwxyz
+  6. Bu token'ı yukarıdaki bot_token alanına yapıştır
+
+how_to_get_chat_id: |
+  CHAT ID BULMA:
+
+  Yöntem 1: @userinfobot
+  1. Telegram'da @userinfobot'u aç
+  2. /start gönder
+  3. Bot sana ID'ni gösterecek
+  4. Bu ID'yi chat_id alanına yapıştır
+
+  Yöntem 2: Manuel
+  1. Botunu oluştur
+  2. Botuna bir mesaj gönder
+  3. Tarayıcıda şu URL'yi aç:
+     https://api.telegram.org/bot<TOKEN>/getUpdates
+     (<TOKEN> yerine bot token'ını yaz)
+  4. "chat":{"id":XXXXXXX} kısmını bul
+  5. Bu ID'yi chat_id alanına yapıştır
+
+testing: |
+  TELEGRAM BOT TEST:
+
+  1. Token ve Chat ID'yi gir
+  2. Telegram botu test et:
+     python -m src.utils.telegram_bot test
+
+  3. Başarılı olursa test mesajı alacaksın
+
+  4. Botu başlat:
+     python main.py
+
+  5. Telegram'dan komut gönder:
+     /start
+
+  6. Bot cevap vermeli!
+
+security_notes: |
+  GÜVENLİK:
+
+  1. Bot token'ını ASLA paylaşma
+  2. GitHub'a yükleme (.gitignore'a ekle)
+  3. authorized_users listesini güncelle
+  4. Sadece güvendiğin kişilere chat_id ver
+  5. Botun gizlilik ayarlarını kontrol et
+
+  BOTFATHER AYARLARI:
+  /setprivacy - disabled (private mesajlar için)
+  /setjoingroups - disabled (güvenlik için)
+  /setcommands - Komut listesini ayarla
