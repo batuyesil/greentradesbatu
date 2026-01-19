@@ -154,6 +154,8 @@ strategy:
 # ========================================
 
 risk_management:
+
+
   # Günlük limitler
   max_daily_loss: 50           # Maksimum $50 günlük zarar
   max_daily_trades: 100        # Maksimum 100 işlem/gün
@@ -172,6 +174,9 @@ risk_management:
   # Volatilite kontrolü
   pause_on_high_volatility: true
   volatility_threshold: 10     # %10'dan fazla volatilite = duraklat
+
+
+  trade_balance_fraction: 0.6
 
 # ========================================
 # EXECUTION AYARLARI

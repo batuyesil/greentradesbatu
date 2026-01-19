@@ -28,6 +28,7 @@ class GreenTradesBot:
 
         self.is_running = False
         self.is_paused = False
+        self._pause_logged = False
         self.start_time = None
 
         self.mode = config.get('mode')
@@ -43,17 +44,23 @@ class GreenTradesBot:
 
         self.strategies = []
 
+        # Not: Telegram /profit ve /stats doğru görünsün diye fee/slippage da takip ediyoruz
         self.stats = {
             'total_trades': 0,
             'successful_trades': 0,
             'failed_trades': 0,
-            'total_profit': 0.0,
-            'total_fees': 0.0,
+            'total_profit': 0.0,      # net
+            'total_fees': 0.0,        # fee toplamı
+            'total_slippage': 0.0,    # slippage cost toplamı (fake tarafında var)
             'opportunities_found': 0,
             'opportunities_executed': 0,
         }
 
         self.quote = self.config.get('strategy.spot_arbitrage.quote', 'USDT')
+
+        # ---- NEW: bot-side flags (özellik çıkarma yok, sadece ek) ----
+        self.log_negative_trades_as_failed = bool(self.config.get('strategy.spot_arbitrage.log_negative_trades_as_failed', False))
+        self.telegram_send_on_all_results = bool(self.config.get('telegram.send_trade_notifications_on_all_results', True))
 
     async def start(self):
         self.logger.info("Bot baslatiliyor...")
@@ -165,79 +172,139 @@ class GreenTradesBot:
             try:
                 loop_count += 1
                 self.logger.info(f"========== DONGU #{loop_count} ==========")
-                
+
+                # PAUSE kontrolü: pause sırasında tarama/trade yapma
                 if self.is_paused:
-                    await asyncio.sleep(5)
+                    if not self._pause_logged:
+                        self._pause_logged = True
+                        self.logger.info("⏸ Bot duraklatildi. /resume ile devam edebilirsin.")
+                    await asyncio.sleep(1.0)
                     continue
-                
+                else:
+                    self._pause_logged = False
+
                 # Heartbeat
                 if loop_count % 10 == 0:
                     await self._heartbeat()
-                
+
                 # Stratejileri çalıştır
                 for strategy in self.strategies:
                     try:
                         opportunities = await strategy.find_opportunities()
-                        
+
                         if opportunities:
                             self.stats['opportunities_found'] += len(opportunities)
                             self.logger.info(f"  {len(opportunities)} firsat bulundu")
-                            
+
                             # En iyi fırsatı seç
                             best_opp = max(opportunities, key=lambda x: x.get('profit_score', 0))
-                            
+
                             # Risk kontrolü
                             if self.risk_manager and not self.risk_manager.check_trade_allowed(best_opp):
                                 self.logger.warning("  Risk yoneticisi islemi engelledi")
                                 continue
-                            
+
                             # İşlemi gerçekleştir
                             result = await self.trade_executor.execute_arbitrage(best_opp)
-                            
+
                             if result.get('success'):
                                 self.stats['total_trades'] += 1
                                 self.stats['successful_trades'] += 1
                                 self.stats['opportunities_executed'] += 1
+
+                                # ---- None-safe PnL/Fees/Slippage ----
                                 profit = result.get('net_profit', 0)
+                                try:
+                                    profit = float(profit) if profit is not None else 0.0
+                                except Exception:
+                                    profit = 0.0
+
+                                fees = result.get('total_fees', result.get('fees', 0))
+                                try:
+                                    fees = float(fees) if fees is not None else 0.0
+                                except Exception:
+                                    fees = 0.0
+
+                                slippage_cost = result.get('total_slippage_cost', result.get('slippage_cost', 0))
+                                try:
+                                    slippage_cost = float(slippage_cost) if slippage_cost is not None else 0.0
+                                except Exception:
+                                    slippage_cost = 0.0
+
                                 self.stats['total_profit'] += profit
-                                
-                                self.logger.info(f"✅ Islem basarili! Net kar: ${profit:.4f}")
-                                
+                                self.stats['total_fees'] += fees
+                                self.stats['total_slippage'] += slippage_cost
+
+                                self.logger.info(
+                                    f"✅ Islem basarili! Net: ${profit:.4f} | Fees: ${fees:.4f} | Slippage: ${slippage_cost:.4f}"
+                                )
+
+                                # Net negatif işlemleri "failed" saymak istersen sadece log tarafında işaretle (işlem yapılmış olur)
+                                if profit < 0 and self.log_negative_trades_as_failed:
+                                    self.logger.warning(f"⚠️  Islem NET NEGATIF (log policy): ${profit:.4f}")
+
                                 # Telegram bildirimi
                                 if self.telegram:
                                     try:
-                                        await self.telegram.send_trade_success(result)
-                                    except:
+                                        await self.telegram.send_trade_executed(result)
+                                    except Exception:
                                         pass
                             else:
                                 self.stats['failed_trades'] += 1
                                 self.logger.warning(f"❌ Islem basarisiz: {result.get('error')}")
-                    
+
+                                # ---- NEW: istenirse başarısız sonuçları da Telegram'a yolla ----
+                                if self.telegram and self.telegram_send_on_all_results:
+                                    try:
+                                        # send_trade_executed template'i hata alanlarını da taşıyacak şekilde zaten toleranslı olmalı
+                                        await self.telegram.send_trade_executed(result)
+                                    except Exception:
+                                        pass
+
                     except Exception as e:
                         self.logger.error(f"Strateji hatasi: {e}", exc_info=True)
-                
+
                 # Bekleme
                 await asyncio.sleep(self.config.get('strategy.scan_interval', 10))
-            
+
             except Exception as e:
                 self.logger.error(f"Ana dongu hatasi: {e}", exc_info=True)
                 await asyncio.sleep(5)
-    
+
     async def stop(self):
         self.logger.info("Bot durduruluyor...")
         self.is_running = False
-        
+
         if self.orderbook_manager:
             await self.orderbook_manager.stop()
-        
+
         if self.exchange_manager:
-            await self.exchange_manager.close()
-        
+            await self.exchange_manager.close_all()
+
         if self.database:
             await self.database.close()
-        
+
         self.logger.info("Bot durduruldu")
-    
+
     async def pause(self):
         self.is_paused = True
-        self.logger.info("Bot duraklat")
+        self.logger.info("Bot duraklatildi")
+
+    async def resume(self):
+        self.is_paused = False
+        self.logger.info("Bot devam ediyor")
+
+    def get_status(self) -> Dict:
+        """Telegram /status komutu için basit durum döndür"""
+        runtime_hours = 0.0
+        if self.start_time:
+            runtime_hours = (datetime.now() - self.start_time).total_seconds() / 3600.0
+
+        return {
+            "status": "running" if self.is_running else "stopped",
+            "mode": self.mode,
+            "runtime_hours": runtime_hours,
+            "active_strategies": len(self.strategies),
+            "connected_exchanges": len(self.exchange_manager.exchanges) if self.exchange_manager else 0,
+            "paused": bool(self.is_paused),
+        }

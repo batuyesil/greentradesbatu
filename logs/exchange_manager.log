@@ -3,3 +3,47 @@
 2026-01-19 02:08:59,645 | INFO     | exchange_manager | OK bybit markets yÃ¼klendi (2602 market)
 2026-01-19 02:09:02,227 | INFO     | exchange_manager | OK okx markets yÃ¼klendi (2385 market)
 2026-01-19 02:09:02,227 | INFO     | exchange_manager | Toplam 2 borsa hazir
+2026-01-19 02:21:19,419 | INFO     | exchange_manager | Borsalar yukleniyor: bybit, okx
+2026-01-19 02:21:21,503 | INFO     | exchange_manager | OK bybit markets yÃ¼klendi (2602 market)
+2026-01-19 02:21:24,009 | INFO     | exchange_manager | OK okx markets yÃ¼klendi (2385 market)
+2026-01-19 02:21:24,009 | INFO     | exchange_manager | Toplam 2 borsa hazir
+2026-01-19 03:11:28,581 | INFO     | exchange_manager | Borsalar yukleniyor: bybit, okx
+2026-01-19 03:11:31,766 | INFO     | exchange_manager | OK bybit markets yüklendi (2602 market)
+2026-01-19 03:11:33,835 | INFO     | exchange_manager | OK okx markets yüklendi (2401 market)
+2026-01-19 03:11:33,835 | INFO     | exchange_manager | Toplam 2 borsa hazir
+2026-01-19 03:19:46,753 | INFO     | exchange_manager | Borsalar yukleniyor: bybit, okx
+2026-01-19 03:19:49,261 | INFO     | exchange_manager | OK bybit markets yüklendi (2594 market)
+2026-01-19 03:19:51,449 | INFO     | exchange_manager | OK okx markets yüklendi (2401 market)
+2026-01-19 03:19:51,449 | INFO     | exchange_manager | Toplam 2 borsa hazir
+2026-01-19 03:24:23,652 | INFO     | exchange_manager | Borsalar yukleniyor: bybit, okx
+2026-01-19 03:24:25,871 | INFO     | exchange_manager | OK bybit markets yüklendi (2594 market)
+2026-01-19 03:24:27,760 | INFO     | exchange_manager | OK okx markets yüklendi (2401 market)
+2026-01-19 03:24:27,761 | INFO     | exchange_manager | Toplam 2 borsa hazir
+2026-01-19 03:26:28,266 | INFO     | exchange_manager | Borsalar yukleniyor: bybit, okx
+2026-01-19 03:26:30,361 | INFO     | exchange_manager | OK bybit markets yüklendi (2594 market)
+2026-01-19 03:26:32,295 | INFO     | exchange_manager | OK okx markets yüklendi (2431 market)
+2026-01-19 03:26:32,295 | INFO     | exchange_manager | Toplam 2 borsa hazir
+2026-01-19 03:30:00,892 | INFO     | exchange_manager | Borsalar yukleniyor: bybit, okx
+2026-01-19 03:30:03,160 | INFO     | exchange_manager | OK bybit markets yüklendi (2610 market)
+2026-01-19 03:30:05,347 | INFO     | exchange_manager | OK okx markets yüklendi (2431 market)
+2026-01-19 03:30:05,347 | INFO     | exchange_manager | Toplam 2 borsa hazir
+2026-01-19 03:39:45,831 | INFO     | exchange_manager | Borsalar yukleniyor: bybit, okx
+2026-01-19 03:39:48,017 | INFO     | exchange_manager | OK bybit markets yüklendi (2608 market)
+2026-01-19 03:39:50,199 | INFO     | exchange_manager | OK okx markets yüklendi (2431 market)
+2026-01-19 03:39:50,200 | INFO     | exchange_manager | Toplam 2 borsa hazir
+2026-01-19 04:03:59,881 | INFO     | exchange_manager | Borsalar yukleniyor: bybit, okx
+2026-01-19 04:04:02,011 | INFO     | exchange_manager | OK bybit markets yüklendi (2610 market)
+2026-01-19 04:04:04,419 | INFO     | exchange_manager | OK okx markets yüklendi (2435 market)
+2026-01-19 04:04:04,420 | INFO     | exchange_manager | Toplam 2 borsa hazir
+2026-01-19 04:18:11,368 | INFO     | exchange_manager | Borsalar yukleniyor: bybit, okx
+2026-01-19 04:18:14,298 | INFO     | exchange_manager | OK bybit markets yüklendi (2598 market)
+2026-01-19 04:18:16,579 | INFO     | exchange_manager | OK okx markets yüklendi (2437 market)
+2026-01-19 04:18:16,580 | INFO     | exchange_manager | Toplam 2 borsa hazir
+2026-01-19 05:05:31,011 | INFO     | exchange_manager | Borsalar yukleniyor: bybit, okx
+2026-01-19 05:05:33,468 | INFO     | exchange_manager | OK bybit markets yüklendi (2610 market)
+2026-01-19 05:05:35,988 | INFO     | exchange_manager | OK okx markets yüklendi (2445 market)
+2026-01-19 05:05:35,989 | INFO     | exchange_manager | Toplam 2 borsa hazir
+2026-01-19 05:25:16,331 | INFO     | exchange_manager | Borsalar yukleniyor: bybit, okx
+2026-01-19 05:25:18,452 | INFO     | exchange_manager | OK bybit markets yüklendi (2604 market)
+2026-01-19 05:25:20,369 | INFO     | exchange_manager | OK okx markets yüklendi (2447 market)
+2026-01-19 05:25:20,369 | INFO     | exchange_manager | Toplam 2 borsa hazir

@@ -16,6 +16,7 @@ logger = None
 bot = None
 LOCK_FILE = Path("greentrades.lock")
 
+
 def signal_handler(signum, frame):
     global bot
     if logger:
@@ -28,6 +29,7 @@ def signal_handler(signum, frame):
     if LOCK_FILE.exists():
         LOCK_FILE.unlink()
     sys.exit(0)
+
 
 def check_single_instance():
     if LOCK_FILE.exists():
@@ -45,6 +47,7 @@ def check_single_instance():
     with open(LOCK_FILE, 'w') as f:
         f.write(str(os.getpid()))
 
+
 def get_interactive_config():
     print("\n" + "="*70)
     print("   🚀 GREENTRADES - ARBITRAGE BOT")
@@ -52,7 +55,7 @@ def get_interactive_config():
     print("📊 MOD SEÇ:\n")
     print("  [1] FAKE MONEY  - Gerçek simülasyon")
     print("  [2] REAL MONEY  - Canlı trading\n")
-    
+
     mode = None
     while True:
         choice = input("Seçim [1/2]: ").strip()
@@ -69,7 +72,7 @@ def get_interactive_config():
             mode = "fake_money"
             break
         print("❌ 1 veya 2!\n")
-    
+
     balance = None
     if mode == "fake_money":
         print("\n💵 BAKİYE:\n")
@@ -97,15 +100,17 @@ def get_interactive_config():
                 break
             except:
                 print("❌ Geçersiz!\n")
-    
+
     input("\n⏎ ENTER...")
     return mode, balance
 
+
 async def main():
     global logger, bot
+
     signal.signal(signal.SIGINT, signal_handler)
     check_single_instance()
-    
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--mode', choices=['fake_money', 'real_money'])
     parser.add_argument('--balance', type=float)
@@ -113,18 +118,20 @@ async def main():
     parser.add_argument('--verbose', action='store_true')
     parser.add_argument('--no-interactive', action='store_true')
     args = parser.parse_args()
-    
+
+    telegram = None
+
     try:
         print("\n🚀 GREENTRADES - Enhanced Edition\n")
-        
+
         if not args.no_interactive and not args.mode:
             mode, balance = get_interactive_config()
         else:
             mode = args.mode or "fake_money"
             balance = args.balance or 1000
-        
+
         logger = setup_logger('main', 'DEBUG' if args.verbose else 'INFO')
-        
+
         logger.info("="*70)
         logger.info("🚀 GreenTrades Başlatılıyor...")
         logger.info(f"🎯 Mod: {mode.upper()}")
@@ -132,35 +139,46 @@ async def main():
             logger.info(f"💵 Bakiye: ${balance:,.2f}")
         else:
             logger.info(f"💰 API Bakiye: %{balance:.0f}")
-        
+
         config = ConfigLoader()
         config.set('mode', mode)
         if mode == "fake_money":
             config.set('balance.fake_money.total', balance)
         else:
             config.set('balance.real_money.percentage', balance)
-        
-        telegram = None
-        if args.telegram:
-            if TelegramNotifier:
-                try:
-                    telegram = TelegramNotifier(config)
-                    await telegram.start()
-                    logger.info("✅ Telegram aktif!")
-                except Exception as e:
-                    logger.warning(f"⚠️  Telegram: {e}")
-        
+
+        # Telegram'ı sadece --telegram'a bağlama: config'te enabled ise otomatik başlat
+        telegram_should_start = bool(config.get("telegram.enabled", False)) or bool(args.telegram)
+
+        if telegram_should_start and TelegramNotifier:
+            try:
+                telegram = TelegramNotifier(config)
+                await telegram.start()
+                logger.info("✅ Telegram aktif!")
+            except Exception as e:
+                logger.warning(f"⚠️  Telegram: {e}")
+                telegram = None
+
         bot = GreenTradesBot(config, telegram)
+
+        # Telegram komutlarının /balance /status vs çalışması için core'u attach et
+        if telegram:
+            try:
+                telegram.attach_core(bot)
+            except Exception:
+                pass
+
         await bot.start()
-        
+
         logger.info("✅ Bot başladı!")
         logger.info("🛑 Ctrl+C ile durdur")
         logger.info("="*70)
-        
+
         await bot.run()
-        
+
     except KeyboardInterrupt:
-        logger.info("\n🛑 Durduruldu")
+        if logger:
+            logger.info("\n🛑 Durduruldu")
     except Exception as e:
         if logger:
             logger.error(f"❌ Hata: {e}", exc_info=True)
@@ -180,6 +198,7 @@ async def main():
                 pass
         if LOCK_FILE.exists():
             LOCK_FILE.unlink()
+
 
 if __name__ == "__main__":
     asyncio.run(main())

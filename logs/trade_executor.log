@@ -1,0 +1,132 @@
+2026-01-19 03:11:41,375 | INFO     | trade_executor  | 💼 FAKE TRADE: AXS/USDT | okx → bybit | Spread: 0.24%
+2026-01-19 03:11:41,375 | ERROR    | trade_executor  | Trade size hesaplama hatası: '>' not supported between instances of 'NoneType' and 'float'
+2026-01-19 03:11:42,192 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Gross: $-0.04 Fees: $0.12 Slippage: $0.16 Net: $-0.32
+2026-01-19 03:11:59,458 | INFO     | trade_executor  | 💼 FAKE TRADE: AXS/USDT | okx → bybit | Spread: 0.16%
+2026-01-19 03:11:59,458 | ERROR    | trade_executor  | Trade size hesaplama hatası: '>' not supported between instances of 'NoneType' and 'float'
+2026-01-19 03:12:00,206 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Gross: $-0.05 Fees: $0.12 Slippage: $0.13 Net: $-0.30
+2026-01-19 03:12:51,240 | INFO     | trade_executor  | 💼 FAKE TRADE: AXS/USDT | okx → bybit | Spread: 0.10%
+2026-01-19 03:12:51,240 | ERROR    | trade_executor  | Trade size hesaplama hatası: '>' not supported between instances of 'NoneType' and 'float'
+2026-01-19 03:12:51,994 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Gross: $-0.08 Fees: $0.12 Slippage: $0.13 Net: $-0.33
+2026-01-19 03:13:09,133 | INFO     | trade_executor  | 💼 FAKE TRADE: AXS/USDT | okx → bybit | Spread: 0.19%
+2026-01-19 03:13:09,134 | ERROR    | trade_executor  | Trade size hesaplama hatası: '>' not supported between instances of 'NoneType' and 'float'
+2026-01-19 03:13:09,900 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Gross: $-0.09 Fees: $0.12 Slippage: $0.18 Net: $-0.40
+2026-01-19 03:20:15,847 | INFO     | trade_executor  | 💼 FAKE TRADE: AXS/USDT | okx → bybit | Spread: 0.19%
+2026-01-19 03:20:16,669 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Trade: $100.00 | Miktar: 53.934500 AXS/USDT | Buy@$1.854101 Sell@$1.850000 | Gross: $-0.22 Fees: $0.25 Slippage: $0.42 Net: $-0.89
+2026-01-19 03:20:33,671 | INFO     | trade_executor  | 💼 FAKE TRADE: AXS/USDT | okx → bybit | Spread: 0.39%
+2026-01-19 03:20:34,490 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Trade: $100.00 | Miktar: 53.463545 AXS/USDT | Buy@$1.870433 Sell@$1.868000 | Gross: $-0.13 Fees: $0.25 Slippage: $0.52 Net: $-0.90
+2026-01-19 03:24:36,357 | INFO     | trade_executor  | 💼 FAKE TRADE: AXS/USDT | bybit → okx | Spread: 0.14%
+2026-01-19 03:24:37,156 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Trade: $100.00 | Miktar: 51.020408 AXS/USDT | Buy@$1.960000 Sell@$1.950791 | Gross: $-0.47 Fees: $0.25 Slippage: $0.61 Net: $-1.33
+2026-01-19 03:30:34,647 | INFO     | trade_executor  | 💼 FAKE TRADE: AXS/USDT | okx → bybit | Spread: 0.17%
+2026-01-19 03:30:35,507 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Trade: $100.00 | Miktar: 53.777562 AXS/USDT | Buy@$1.859512 Sell@$1.857000 | Gross: $-0.14 Fees: $0.25 Slippage: $0.31 Net: $-0.69
+2026-01-19 03:40:13,288 | INFO     | trade_executor  | 💼 FAKE TRADE: AXS/USDT | bybit → okx | Spread: 0.12%
+2026-01-19 03:40:14,212 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Trade: $100.00 | Miktar: 52.642654 AXS/USDT | Buy@$1.899600 Sell@$1.897497 | Gross: $-0.11 Fees: $0.25 Slippage: $0.23 Net: $-0.59
+2026-01-19 04:06:42,757 | INFO     | trade_executor  | 💼 FAKE TRADE: AXS/USDT | bybit → okx | Spread: 0.23%
+2026-01-19 04:06:43,574 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Trade: $125.00 | Miktar: 64.632885 AXS/USDT | Buy@$1.934000 Sell@$1.933625 | Gross: $-0.02 Fees: $0.31 Slippage: $0.31 Net: $-0.65
+2026-01-19 04:06:43,574 | INFO     | trade_executor  | ✅ İŞLEM BAŞARILI:
+   Coin: AXS/USDT | İşlem: $122.49 | Miktar: 63.333936
+   Alış: bybit @ $1.934000
+   Satış: okx @ $1.933625
+   Gross Kar: $-0.0242
+   Fees: $0.3125 (0.10% + 0.15%)
+   Slippage: $0.3147 (0.052% + 0.200%)
+   NET KAR: $-0.6514 (-0.53%)
+   Fill: %98.0
+2026-01-19 04:10:24,607 | INFO     | trade_executor  | 💼 FAKE TRADE: AXS/USDT | okx → bybit | Spread: 0.10%
+2026-01-19 04:10:25,422 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Trade: $63.66 | Miktar: 32.699347 AXS/USDT | Buy@$1.946886 Sell@$1.944000 | Gross: $-0.09 Fees: $0.16 Slippage: $0.16 Net: $-0.41
+2026-01-19 04:10:25,422 | INFO     | trade_executor  | ✅ İŞLEM BAŞARILI:
+   Coin: AXS/USDT | İşlem: $63.51 | Miktar: 32.622193
+   Alış: okx @ $1.946886
+   Satış: bybit @ $1.944000
+   Gross Kar: $-0.0944
+   Fees: $0.1591 (0.15% + 0.10%)
+   Slippage: $0.1601 (0.200% + 0.051%)
+   NET KAR: $-0.4135 (-0.65%)
+   Fill: %99.8
+2026-01-19 04:14:05,548 | INFO     | trade_executor  | 💼 FAKE TRADE: AXS/USDT | okx → bybit | Spread: 0.13%
+2026-01-19 04:14:06,370 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Trade: $95.32 | Miktar: 49.024631 AXS/USDT | Buy@$1.944381 Sell@$1.941000 | Gross: $-0.17 Fees: $0.24 Slippage: $0.29 Net: $-0.69
+2026-01-19 04:14:06,370 | INFO     | trade_executor  | ✅ İŞLEM BAŞARILI:
+   Coin: AXS/USDT | İşlem: $93.03 | Miktar: 47.845078
+   Alış: okx @ $1.944381
+   Satış: bybit @ $1.941000
+   Gross Kar: $-0.1658
+   Fees: $0.2381 (0.15% + 0.10%)
+   Slippage: $0.2888 (0.200% + 0.103%)
+   NET KAR: $-0.6927 (-0.74%)
+   Fill: %97.6
+2026-01-19 04:15:14,641 | INFO     | trade_executor  | 💼 FAKE TRADE: AXS/USDT | okx → bybit | Spread: 0.17%
+2026-01-19 04:15:15,327 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Trade: $107.47 | Miktar: 55.494985 AXS/USDT | Buy@$1.936565 Sell@$1.928000 | Gross: $-0.48 Fees: $0.27 Slippage: $0.66 Net: $-1.40
+2026-01-19 04:15:15,327 | INFO     | trade_executor  | ✅ İŞLEM BAŞARILI:
+   Coin: AXS/USDT | İşlem: $107.21 | Miktar: 55.359724
+   Alış: okx @ $1.936565
+   Satış: bybit @ $1.928000
+   Gross Kar: $-0.4753
+   Fees: $0.2682 (0.15% + 0.10%)
+   Slippage: $0.6590 (0.200% + 0.413%)
+   NET KAR: $-1.4026 (-1.31%)
+   Fill: %99.8
+2026-01-19 04:16:23,002 | INFO     | trade_executor  | 💼 FAKE TRADE: AXS/USDT | okx → bybit | Spread: 0.13%
+2026-01-19 04:16:23,825 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Trade: $53.68 | Miktar: 27.708106 AXS/USDT | Buy@$1.937267 Sell@$1.930000 | Gross: $-0.20 Fees: $0.13 Slippage: $0.27 Net: $-0.61
+2026-01-19 04:16:23,825 | INFO     | trade_executor  | ✅ İŞLEM BAŞARILI:
+   Coin: AXS/USDT | İşlem: $52.43 | Miktar: 27.063244
+   Alış: okx @ $1.937267
+   Satış: bybit @ $1.930000
+   Gross Kar: $-0.2013
+   Fees: $0.1340 (0.15% + 0.10%)
+   Slippage: $0.2737 (0.200% + 0.310%)
+   NET KAR: $-0.6091 (-1.16%)
+   Fill: %97.7
+2026-01-19 04:17:16,050 | INFO     | trade_executor  | 💼 FAKE TRADE: LDO/USDT | bybit → okx | Spread: 0.18%
+2026-01-19 04:17:16,792 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Trade: $27.37 | Miktar: 50.139118 LDO/USDT | Buy@$0.545900 Sell@$0.544609 | Gross: $-0.06 Fees: $0.07 Slippage: $0.12 Net: $-0.25
+2026-01-19 04:17:16,793 | INFO     | trade_executor  | ✅ İŞLEM BAŞARILI:
+   Coin: LDO/USDT | İşlem: $26.27 | Miktar: 48.128107
+   Alış: bybit @ $0.545900
+   Satış: okx @ $0.544609
+   Gross Kar: $-0.0647
+   Fees: $0.0683 (0.10% + 0.15%)
+   Slippage: $0.1150 (0.220% + 0.200%)
+   NET KAR: $-0.2481 (-0.94%)
+   Fill: %96.0
+2026-01-19 04:17:35,520 | INFO     | trade_executor  | 💼 FAKE TRADE: AXS/USDT | okx → bybit | Spread: 0.23%
+2026-01-19 04:17:36,339 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Trade: $40.43 | Miktar: 20.878084 AXS/USDT | Buy@$1.936465 Sell@$1.937000 | Gross: $0.01 Fees: $0.10 Slippage: $0.08 Net: $-0.17
+2026-01-19 04:17:36,339 | INFO     | trade_executor  | ✅ İŞLEM BAŞARILI:
+   Coin: AXS/USDT | İşlem: $40.29 | Miktar: 20.807864
+   Alış: okx @ $1.936465
+   Satış: bybit @ $1.937000
+   Gross Kar: $0.0112
+   Fees: $0.1011 (0.15% + 0.10%)
+   Slippage: $0.0809 (0.200% + 0.000%)
+   NET KAR: $-0.1708 (-0.42%)
+   Fill: %99.7
+2026-01-19 04:20:06,487 | INFO     | trade_executor  | 💼 FAKE TRADE: AXS/USDT | okx → bybit | Spread: 0.13%
+2026-01-19 04:20:07,306 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Trade: $250.00 | Miktar: 131.006037 AXS/USDT | Buy@$1.908309 Sell@$1.901000 | Gross: $-0.96 Fees: $0.62 Slippage: $1.29 Net: $-2.87
+2026-01-19 04:20:07,307 | INFO     | trade_executor  | ✅ İŞLEM BAŞARILI:
+   Coin: AXS/USDT | İşlem: $248.26 | Miktar: 130.093451
+   Alış: okx @ $1.908309
+   Satış: bybit @ $1.901000
+   Gross Kar: $-0.9575
+   Fees: $0.6240 (0.15% + 0.10%)
+   Slippage: $1.2866 (0.200% + 0.315%)
+   NET KAR: $-2.8681 (-1.16%)
+   Fill: %99.3
+2026-01-19 05:07:56,297 | INFO     | trade_executor  | 💼 FAKE TRADE: AXS/USDT | okx → bybit | Spread: 0.16%
+2026-01-19 05:07:57,131 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Trade: $62.50 | Miktar: 33.197748 AXS/USDT | Buy@$1.882658 Sell@$1.882000 | Gross: $-0.02 Fees: $0.16 Slippage: $0.12 Net: $-0.30
+2026-01-19 05:07:57,133 | INFO     | trade_executor  | ✅ İŞLEM BAŞARILI:
+   Coin: AXS/USDT | İşlem: $61.27 | Miktar: 32.546144
+   Alış: okx @ $1.882658
+   Satış: bybit @ $1.882000
+   Gross Kar: $-0.0218
+   Fees: $0.1562 (0.15% + 0.10%)
+   Slippage: $0.1250 (0.200% + 0.000%)
+   NET KAR: $-0.3031 (-0.49%)
+   Fill: %98.0
+2026-01-19 05:25:26,972 | INFO     | trade_executor  | 💼 FAKE TRADE: AXS/USDT | okx → bybit | Spread: 0.17%
+2026-01-19 05:25:27,683 | WARNING  | trade_executor  | ⚠️  Net kar negatif! Trade: $37.50 | Miktar: 19.627202 AXS/USDT | Buy@$1.910614 Sell@$1.909000 | Gross: $-0.03 Fees: $0.09 Slippage: $0.09 Net: $-0.22
+2026-01-19 05:25:27,684 | INFO     | trade_executor  | ✅ İŞLEM BAŞARILI:
+   Coin: AXS/USDT | İşlem: $37.49 | Miktar: 19.621348
+   Alış: okx @ $1.910614
+   Satış: bybit @ $1.909000
+   Gross Kar: $-0.0317
+   Fees: $0.0937 (0.15% + 0.10%)
+   Slippage: $0.0946 (0.200% + 0.052%)
+   NET KAR: $-0.2200 (-0.59%)
+   Fill: %100.0

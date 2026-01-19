@@ -35,3 +35,345 @@ Exception: exchanges.enabled boÅŸ! config'te borsa yok.
 2026-01-19 02:10:47,141 | INFO     | bot             | ========== DONGU #7 ==========
 2026-01-19 02:11:04,379 | INFO     | bot             | ========== DONGU #8 ==========
 2026-01-19 02:11:09,051 | INFO     | bot             | Bot durduruluyor...
+2026-01-19 02:21:19,407 | INFO     | bot             | Bot modu: fake_money
+2026-01-19 02:21:19,408 | INFO     | bot             | Bot baslatiliyor...
+2026-01-19 02:21:19,408 | INFO     | bot             | Database baslatiliyor...
+2026-01-19 02:21:19,418 | INFO     | bot             | Borsalar baglaniyor...
+2026-01-19 02:21:24,009 | INFO     | bot             | Bakiyeler yukleniyor...
+2026-01-19 02:21:24,011 | INFO     | bot             | Orderbook yoneticisi baslatiliyor...
+2026-01-19 02:21:24,012 | INFO     | bot             | Islem executor'i hazirlaniyor...
+2026-01-19 02:21:24,012 | INFO     | bot             | Risk yoneticisi baslatiliyor...
+2026-01-19 02:21:24,013 | INFO     | bot             | Performans takipcisi baslatiliyor...
+2026-01-19 02:21:24,014 | INFO     | bot             | Stratejiler yukleniyor...
+2026-01-19 02:21:24,014 | INFO     | bot             |   Spot Arbitrage stratejisi aktif
+2026-01-19 02:21:24,014 | INFO     | bot             |   Triangular Arbitrage stratejisi aktif
+2026-01-19 02:21:24,015 | INFO     | bot             | Baslangic bakiyesi: $250.00
+2026-01-19 02:21:24,015 | INFO     | bot             | Bot basariyla baslatildi!
+2026-01-19 02:21:24,016 | INFO     | bot             | ANA DONGU BASLADI!
+2026-01-19 02:21:24,016 | INFO     | bot             | MAIN LOOP ICINDEYIM!
+2026-01-19 02:21:24,016 | INFO     | bot             | ========== DONGU #1 ==========
+2026-01-19 02:21:41,182 | INFO     | bot             | ========== DONGU #2 ==========
+2026-01-19 02:21:57,860 | INFO     | bot             | ========== DONGU #3 ==========
+2026-01-19 02:22:05,067 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 02:22:05,068 | ERROR    | bot             | Strateji hatasi: 'RiskManager' object has no attribute 'check_trade_allowed'
+Traceback (most recent call last):
+  File "C:\Users\batuh\Downloads\greentrades\src\core\bot.py", line 190, in _main_loop
+    if self.risk_manager and not self.risk_manager.check_trade_allowed(best_opp):
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RiskManager' object has no attribute 'check_trade_allowed'
+2026-01-19 02:22:15,072 | INFO     | bot             | ========== DONGU #4 ==========
+2026-01-19 03:11:28,569 | INFO     | bot             | Bot modu: fake_money
+2026-01-19 03:11:28,570 | INFO     | bot             | Bot baslatiliyor...
+2026-01-19 03:11:28,570 | INFO     | bot             | Database baslatiliyor...
+2026-01-19 03:11:28,580 | INFO     | bot             | Borsalar baglaniyor...
+2026-01-19 03:11:33,836 | INFO     | bot             | Bakiyeler yukleniyor...
+2026-01-19 03:11:33,837 | INFO     | bot             | Orderbook yoneticisi baslatiliyor...
+2026-01-19 03:11:33,838 | INFO     | bot             | Islem executor'i hazirlaniyor...
+2026-01-19 03:11:33,839 | INFO     | bot             | Risk yoneticisi baslatiliyor...
+2026-01-19 03:11:33,840 | INFO     | bot             | Performans takipcisi baslatiliyor...
+2026-01-19 03:11:33,840 | INFO     | bot             | Stratejiler yukleniyor...
+2026-01-19 03:11:33,840 | INFO     | bot             |   Spot Arbitrage stratejisi aktif
+2026-01-19 03:11:33,841 | INFO     | bot             |   Triangular Arbitrage stratejisi aktif
+2026-01-19 03:11:33,841 | INFO     | bot             | Baslangic bakiyesi: $250.00
+2026-01-19 03:11:33,841 | INFO     | bot             | Bot basariyla baslatildi!
+2026-01-19 03:11:33,842 | INFO     | bot             | ANA DONGU BASLADI!
+2026-01-19 03:11:33,842 | INFO     | bot             | MAIN LOOP ICINDEYIM!
+2026-01-19 03:11:33,842 | INFO     | bot             | ========== DONGU #1 ==========
+2026-01-19 03:11:41,375 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 03:11:42,192 | WARNING  | bot             | ❌ Islem basarisiz: Net kar negatif
+2026-01-19 03:11:52,201 | INFO     | bot             | ========== DONGU #2 ==========
+2026-01-19 03:11:59,458 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 03:12:00,206 | WARNING  | bot             | ❌ Islem basarisiz: Net kar negatif
+2026-01-19 03:12:10,214 | INFO     | bot             | ========== DONGU #3 ==========
+2026-01-19 03:12:27,119 | INFO     | bot             | ========== DONGU #4 ==========
+2026-01-19 03:12:44,376 | INFO     | bot             | ========== DONGU #5 ==========
+2026-01-19 03:12:51,240 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 03:12:51,994 | WARNING  | bot             | ❌ Islem basarisiz: Net kar negatif
+2026-01-19 03:13:01,997 | INFO     | bot             | ========== DONGU #6 ==========
+2026-01-19 03:13:09,133 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 03:13:09,900 | WARNING  | bot             | ❌ Islem basarisiz: Net kar negatif
+2026-01-19 03:13:19,900 | INFO     | bot             | ========== DONGU #7 ==========
+2026-01-19 03:13:36,725 | INFO     | bot             | ========== DONGU #8 ==========
+2026-01-19 03:13:53,812 | INFO     | bot             | ========== DONGU #9 ==========
+2026-01-19 03:14:00,580 | INFO     | bot             | Bot durduruluyor...
+2026-01-19 03:14:01,113 | INFO     | bot             | Bot durduruldu
+2026-01-19 03:19:46,750 | INFO     | bot             | Bot modu: fake_money
+2026-01-19 03:19:46,750 | INFO     | bot             | Bot baslatiliyor...
+2026-01-19 03:19:46,750 | INFO     | bot             | Database baslatiliyor...
+2026-01-19 03:19:46,752 | INFO     | bot             | Borsalar baglaniyor...
+2026-01-19 03:19:51,449 | INFO     | bot             | Bakiyeler yukleniyor...
+2026-01-19 03:19:51,450 | INFO     | bot             | Orderbook yoneticisi baslatiliyor...
+2026-01-19 03:19:51,451 | INFO     | bot             | Islem executor'i hazirlaniyor...
+2026-01-19 03:19:51,452 | INFO     | bot             | Risk yoneticisi baslatiliyor...
+2026-01-19 03:19:51,453 | INFO     | bot             | Performans takipcisi baslatiliyor...
+2026-01-19 03:19:51,453 | INFO     | bot             | Stratejiler yukleniyor...
+2026-01-19 03:19:51,453 | INFO     | bot             |   Spot Arbitrage stratejisi aktif
+2026-01-19 03:19:51,454 | INFO     | bot             |   Triangular Arbitrage stratejisi aktif
+2026-01-19 03:19:51,454 | INFO     | bot             | Baslangic bakiyesi: $250.00
+2026-01-19 03:19:51,455 | INFO     | bot             | Bot basariyla baslatildi!
+2026-01-19 03:19:51,455 | INFO     | bot             | ANA DONGU BASLADI!
+2026-01-19 03:19:51,455 | INFO     | bot             | MAIN LOOP ICINDEYIM!
+2026-01-19 03:19:51,456 | INFO     | bot             | ========== DONGU #1 ==========
+2026-01-19 03:20:08,472 | INFO     | bot             | ========== DONGU #2 ==========
+2026-01-19 03:20:15,847 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 03:20:16,669 | WARNING  | bot             | ❌ Islem basarisiz: Net kar negatif
+2026-01-19 03:20:26,681 | INFO     | bot             | ========== DONGU #3 ==========
+2026-01-19 03:20:33,671 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 03:20:34,490 | WARNING  | bot             | ❌ Islem basarisiz: Net kar negatif
+2026-01-19 03:24:23,650 | INFO     | bot             | Bot modu: fake_money
+2026-01-19 03:24:23,650 | INFO     | bot             | Bot baslatiliyor...
+2026-01-19 03:24:23,650 | INFO     | bot             | Database baslatiliyor...
+2026-01-19 03:24:23,652 | INFO     | bot             | Borsalar baglaniyor...
+2026-01-19 03:24:27,761 | INFO     | bot             | Bakiyeler yukleniyor...
+2026-01-19 03:24:27,762 | INFO     | bot             | Orderbook yoneticisi baslatiliyor...
+2026-01-19 03:24:27,763 | INFO     | bot             | Islem executor'i hazirlaniyor...
+2026-01-19 03:24:27,763 | INFO     | bot             | Risk yoneticisi baslatiliyor...
+2026-01-19 03:24:27,764 | INFO     | bot             | Performans takipcisi baslatiliyor...
+2026-01-19 03:24:27,765 | INFO     | bot             | Stratejiler yukleniyor...
+2026-01-19 03:24:27,765 | INFO     | bot             |   Spot Arbitrage stratejisi aktif
+2026-01-19 03:24:27,765 | INFO     | bot             |   Triangular Arbitrage stratejisi aktif
+2026-01-19 03:24:27,766 | INFO     | bot             | Baslangic bakiyesi: $250.00
+2026-01-19 03:24:27,766 | INFO     | bot             | Bot basariyla baslatildi!
+2026-01-19 03:24:27,767 | INFO     | bot             | ANA DONGU BASLADI!
+2026-01-19 03:24:27,767 | INFO     | bot             | MAIN LOOP ICINDEYIM!
+2026-01-19 03:24:27,768 | INFO     | bot             | ========== DONGU #1 ==========
+2026-01-19 03:24:36,357 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 03:24:37,157 | WARNING  | bot             | ❌ Islem basarisiz: Net kar negatif
+2026-01-19 03:24:47,168 | INFO     | bot             | ========== DONGU #2 ==========
+2026-01-19 03:26:28,263 | INFO     | bot             | Bot modu: fake_money
+2026-01-19 03:26:28,263 | INFO     | bot             | Bot baslatiliyor...
+2026-01-19 03:26:28,263 | INFO     | bot             | Database baslatiliyor...
+2026-01-19 03:26:28,265 | INFO     | bot             | Borsalar baglaniyor...
+2026-01-19 03:26:32,296 | INFO     | bot             | Bakiyeler yukleniyor...
+2026-01-19 03:26:32,297 | INFO     | bot             | Orderbook yoneticisi baslatiliyor...
+2026-01-19 03:26:32,298 | INFO     | bot             | Islem executor'i hazirlaniyor...
+2026-01-19 03:26:32,298 | INFO     | bot             | Risk yoneticisi baslatiliyor...
+2026-01-19 03:26:32,299 | INFO     | bot             | Performans takipcisi baslatiliyor...
+2026-01-19 03:26:32,300 | INFO     | bot             | Stratejiler yukleniyor...
+2026-01-19 03:26:32,300 | INFO     | bot             |   Spot Arbitrage stratejisi aktif
+2026-01-19 03:26:32,301 | INFO     | bot             |   Triangular Arbitrage stratejisi aktif
+2026-01-19 03:26:32,301 | INFO     | bot             | Baslangic bakiyesi: $250.00
+2026-01-19 03:26:32,301 | INFO     | bot             | Bot basariyla baslatildi!
+2026-01-19 03:26:32,302 | INFO     | bot             | ANA DONGU BASLADI!
+2026-01-19 03:26:32,302 | INFO     | bot             | MAIN LOOP ICINDEYIM!
+2026-01-19 03:26:32,303 | INFO     | bot             | ========== DONGU #1 ==========
+2026-01-19 03:26:48,872 | INFO     | bot             | ========== DONGU #2 ==========
+2026-01-19 03:27:06,091 | INFO     | bot             | ========== DONGU #3 ==========
+2026-01-19 03:27:18,820 | INFO     | bot             | Bot durduruluyor...
+2026-01-19 03:27:19,351 | INFO     | bot             | Bot durduruldu
+2026-01-19 03:27:23,084 | INFO     | bot             | Bot durduruluyor...
+2026-01-19 03:27:23,084 | INFO     | bot             | Bot durduruldu
+2026-01-19 03:30:00,889 | INFO     | bot             | Bot modu: fake_money
+2026-01-19 03:30:00,890 | INFO     | bot             | Bot baslatiliyor...
+2026-01-19 03:30:00,890 | INFO     | bot             | Database baslatiliyor...
+2026-01-19 03:30:00,892 | INFO     | bot             | Borsalar baglaniyor...
+2026-01-19 03:30:05,348 | INFO     | bot             | Bakiyeler yukleniyor...
+2026-01-19 03:30:05,349 | INFO     | bot             | Orderbook yoneticisi baslatiliyor...
+2026-01-19 03:30:05,350 | INFO     | bot             | Islem executor'i hazirlaniyor...
+2026-01-19 03:30:05,350 | INFO     | bot             | Risk yoneticisi baslatiliyor...
+2026-01-19 03:30:05,351 | INFO     | bot             | Performans takipcisi baslatiliyor...
+2026-01-19 03:30:05,352 | INFO     | bot             | Stratejiler yukleniyor...
+2026-01-19 03:30:05,352 | INFO     | bot             |   Spot Arbitrage stratejisi aktif
+2026-01-19 03:30:05,352 | INFO     | bot             |   Triangular Arbitrage stratejisi aktif
+2026-01-19 03:30:05,354 | INFO     | bot             | Baslangic bakiyesi: $250.00
+2026-01-19 03:30:05,354 | INFO     | bot             | Bot basariyla baslatildi!
+2026-01-19 03:30:05,354 | INFO     | bot             | ANA DONGU BASLADI!
+2026-01-19 03:30:05,354 | INFO     | bot             | MAIN LOOP ICINDEYIM!
+2026-01-19 03:30:05,354 | INFO     | bot             | ========== DONGU #1 ==========
+2026-01-19 03:30:22,216 | INFO     | bot             | ========== DONGU #2 ==========
+2026-01-19 03:30:22,216 | INFO     | bot             | ⏸ Bot duraklatildi. /resume ile devam edebilirsin.
+2026-01-19 03:30:23,228 | INFO     | bot             | ========== DONGU #3 ==========
+2026-01-19 03:30:24,238 | INFO     | bot             | ========== DONGU #4 ==========
+2026-01-19 03:30:25,233 | INFO     | bot             | ========== DONGU #5 ==========
+2026-01-19 03:30:26,244 | INFO     | bot             | ========== DONGU #6 ==========
+2026-01-19 03:30:27,243 | INFO     | bot             | ========== DONGU #7 ==========
+2026-01-19 03:30:34,647 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 03:30:35,507 | WARNING  | bot             | ❌ Islem basarisiz: Net kar negatif
+2026-01-19 03:30:45,514 | INFO     | bot             | ========== DONGU #8 ==========
+2026-01-19 03:31:02,584 | INFO     | bot             | ========== DONGU #9 ==========
+2026-01-19 03:39:45,828 | INFO     | bot             | Bot modu: fake_money
+2026-01-19 03:39:45,829 | INFO     | bot             | Bot baslatiliyor...
+2026-01-19 03:39:45,829 | INFO     | bot             | Database baslatiliyor...
+2026-01-19 03:39:45,831 | INFO     | bot             | Borsalar baglaniyor...
+2026-01-19 03:39:50,200 | INFO     | bot             | Bakiyeler yukleniyor...
+2026-01-19 03:39:50,201 | INFO     | bot             | Orderbook yoneticisi baslatiliyor...
+2026-01-19 03:39:50,202 | INFO     | bot             | Islem executor'i hazirlaniyor...
+2026-01-19 03:39:50,203 | INFO     | bot             | Risk yoneticisi baslatiliyor...
+2026-01-19 03:39:50,203 | INFO     | bot             | Performans takipcisi baslatiliyor...
+2026-01-19 03:39:50,204 | INFO     | bot             | Stratejiler yukleniyor...
+2026-01-19 03:39:50,205 | INFO     | bot             |   Spot Arbitrage stratejisi aktif
+2026-01-19 03:39:50,205 | INFO     | bot             |   Triangular Arbitrage stratejisi aktif
+2026-01-19 03:39:50,206 | INFO     | bot             | Baslangic bakiyesi: $250.00
+2026-01-19 03:39:50,206 | INFO     | bot             | Bot basariyla baslatildi!
+2026-01-19 03:39:50,207 | INFO     | bot             | ANA DONGU BASLADI!
+2026-01-19 03:39:50,207 | INFO     | bot             | MAIN LOOP ICINDEYIM!
+2026-01-19 03:39:50,207 | INFO     | bot             | ========== DONGU #1 ==========
+2026-01-19 03:40:06,544 | INFO     | bot             | ========== DONGU #2 ==========
+2026-01-19 03:40:13,288 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 03:40:14,212 | WARNING  | bot             | ❌ Islem basarisiz: Net kar negatif
+2026-01-19 03:40:24,211 | INFO     | bot             | ========== DONGU #3 ==========
+2026-01-19 03:40:40,634 | INFO     | bot             | ========== DONGU #4 ==========
+2026-01-19 03:40:57,665 | INFO     | bot             | ========== DONGU #5 ==========
+2026-01-19 04:03:59,872 | INFO     | bot             | Bot modu: fake_money
+2026-01-19 04:03:59,873 | INFO     | bot             | Bot baslatiliyor...
+2026-01-19 04:03:59,873 | INFO     | bot             | Database baslatiliyor...
+2026-01-19 04:03:59,880 | INFO     | bot             | Borsalar baglaniyor...
+2026-01-19 04:04:04,420 | INFO     | bot             | Bakiyeler yukleniyor...
+2026-01-19 04:04:04,422 | INFO     | bot             | Orderbook yoneticisi baslatiliyor...
+2026-01-19 04:04:04,423 | INFO     | bot             | Islem executor'i hazirlaniyor...
+2026-01-19 04:04:04,424 | INFO     | bot             | Risk yoneticisi baslatiliyor...
+2026-01-19 04:04:04,424 | INFO     | bot             | Performans takipcisi baslatiliyor...
+2026-01-19 04:04:04,425 | INFO     | bot             | Stratejiler yukleniyor...
+2026-01-19 04:04:04,425 | INFO     | bot             |   Spot Arbitrage stratejisi aktif
+2026-01-19 04:04:04,426 | INFO     | bot             |   Triangular Arbitrage stratejisi aktif
+2026-01-19 04:04:04,426 | INFO     | bot             | Baslangic bakiyesi: $500.00
+2026-01-19 04:04:04,426 | INFO     | bot             | Bot basariyla baslatildi!
+2026-01-19 04:04:04,427 | INFO     | bot             | ANA DONGU BASLADI!
+2026-01-19 04:04:04,427 | INFO     | bot             | MAIN LOOP ICINDEYIM!
+2026-01-19 04:04:04,428 | INFO     | bot             | ========== DONGU #1 ==========
+2026-01-19 04:04:21,216 | INFO     | bot             | ========== DONGU #2 ==========
+2026-01-19 04:04:38,564 | INFO     | bot             | ========== DONGU #3 ==========
+2026-01-19 04:04:55,060 | INFO     | bot             | ========== DONGU #4 ==========
+2026-01-19 04:05:12,252 | INFO     | bot             | ========== DONGU #5 ==========
+2026-01-19 04:05:29,061 | INFO     | bot             | ========== DONGU #6 ==========
+2026-01-19 04:05:45,973 | INFO     | bot             | ========== DONGU #7 ==========
+2026-01-19 04:06:02,075 | INFO     | bot             | ========== DONGU #8 ==========
+2026-01-19 04:06:18,346 | INFO     | bot             | ========== DONGU #9 ==========
+2026-01-19 04:06:35,259 | INFO     | bot             | ========== DONGU #10 ==========
+2026-01-19 04:06:35,652 | INFO     | bot             | HEARTBEAT bybit GALA/USDT bid=0.00672 ask=0.00673 last=0.00672
+2026-01-19 04:06:42,756 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 04:06:43,575 | INFO     | bot             | ✅ Islem basarili! Net: $-0.6514 | Fees: $0.3125 | Slippage: $0.3147
+2026-01-19 04:06:54,340 | INFO     | bot             | ========== DONGU #11 ==========
+2026-01-19 04:07:11,512 | INFO     | bot             | ========== DONGU #12 ==========
+2026-01-19 04:07:28,310 | INFO     | bot             | ========== DONGU #13 ==========
+2026-01-19 04:07:45,198 | INFO     | bot             | ========== DONGU #14 ==========
+2026-01-19 04:08:01,907 | INFO     | bot             | ========== DONGU #15 ==========
+2026-01-19 04:08:18,070 | INFO     | bot             | ========== DONGU #16 ==========
+2026-01-19 04:08:35,073 | INFO     | bot             | ========== DONGU #17 ==========
+2026-01-19 04:08:52,015 | INFO     | bot             | ========== DONGU #18 ==========
+2026-01-19 04:09:08,813 | INFO     | bot             | ========== DONGU #19 ==========
+2026-01-19 04:09:25,486 | INFO     | bot             | ========== DONGU #20 ==========
+2026-01-19 04:09:25,873 | INFO     | bot             | HEARTBEAT bybit GALA/USDT bid=0.00672 ask=0.00673 last=0.00672
+2026-01-19 04:09:44,235 | INFO     | bot             | ========== DONGU #21 ==========
+2026-01-19 04:10:01,330 | INFO     | bot             | ========== DONGU #22 ==========
+2026-01-19 04:10:17,979 | INFO     | bot             | ========== DONGU #23 ==========
+2026-01-19 04:10:24,607 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 04:10:25,422 | INFO     | bot             | ✅ Islem basarili! Net: $-0.4135 | Fees: $0.1591 | Slippage: $0.1601
+2026-01-19 04:10:36,100 | INFO     | bot             | ========== DONGU #24 ==========
+2026-01-19 04:10:53,154 | INFO     | bot             | ========== DONGU #25 ==========
+2026-01-19 04:11:09,849 | INFO     | bot             | ========== DONGU #26 ==========
+2026-01-19 04:11:27,104 | INFO     | bot             | ========== DONGU #27 ==========
+2026-01-19 04:11:44,043 | INFO     | bot             | ========== DONGU #28 ==========
+2026-01-19 04:12:00,664 | INFO     | bot             | ========== DONGU #29 ==========
+2026-01-19 04:12:16,947 | INFO     | bot             | ========== DONGU #30 ==========
+2026-01-19 04:12:17,295 | INFO     | bot             | HEARTBEAT bybit GALA/USDT bid=0.00674 ask=0.00675 last=0.00674
+2026-01-19 04:12:33,820 | INFO     | bot             | ========== DONGU #31 ==========
+2026-01-19 04:12:51,354 | INFO     | bot             | ========== DONGU #32 ==========
+2026-01-19 04:13:08,356 | INFO     | bot             | ========== DONGU #33 ==========
+2026-01-19 04:13:25,579 | INFO     | bot             | ========== DONGU #34 ==========
+2026-01-19 04:13:42,455 | INFO     | bot             | ========== DONGU #35 ==========
+2026-01-19 04:13:58,749 | INFO     | bot             | ========== DONGU #36 ==========
+2026-01-19 04:14:05,548 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 04:14:06,370 | INFO     | bot             | ✅ Islem basarili! Net: $-0.6927 | Fees: $0.2381 | Slippage: $0.2888
+2026-01-19 04:14:17,094 | INFO     | bot             | ========== DONGU #37 ==========
+2026-01-19 04:14:33,497 | INFO     | bot             | ========== DONGU #38 ==========
+2026-01-19 04:14:50,352 | INFO     | bot             | ========== DONGU #39 ==========
+2026-01-19 04:15:07,382 | INFO     | bot             | ========== DONGU #40 ==========
+2026-01-19 04:15:07,721 | INFO     | bot             | HEARTBEAT bybit GALA/USDT bid=0.00676 ask=0.00677 last=0.00676
+2026-01-19 04:15:14,640 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 04:15:15,327 | INFO     | bot             | ✅ Islem basarili! Net: $-1.4026 | Fees: $0.2682 | Slippage: $0.6590
+2026-01-19 04:15:25,873 | INFO     | bot             | ========== DONGU #41 ==========
+2026-01-19 04:15:42,952 | INFO     | bot             | ========== DONGU #42 ==========
+2026-01-19 04:15:59,539 | INFO     | bot             | ========== DONGU #43 ==========
+2026-01-19 04:16:16,750 | INFO     | bot             | ========== DONGU #44 ==========
+2026-01-19 04:16:23,002 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 04:16:23,825 | INFO     | bot             | ✅ Islem basarili! Net: $-0.6091 | Fees: $0.1340 | Slippage: $0.2737
+2026-01-19 04:16:34,453 | INFO     | bot             | ========== DONGU #45 ==========
+2026-01-19 04:16:51,902 | INFO     | bot             | ========== DONGU #46 ==========
+2026-01-19 04:17:08,606 | INFO     | bot             | ========== DONGU #47 ==========
+2026-01-19 04:17:16,050 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 04:17:16,793 | INFO     | bot             | ✅ Islem basarili! Net: $-0.2481 | Fees: $0.0683 | Slippage: $0.1150
+2026-01-19 04:17:27,572 | INFO     | bot             | ========== DONGU #48 ==========
+2026-01-19 04:17:35,520 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 04:17:36,340 | INFO     | bot             | ✅ Islem basarili! Net: $-0.1708 | Fees: $0.1011 | Slippage: $0.0809
+2026-01-19 04:17:46,921 | INFO     | bot             | ========== DONGU #49 ==========
+2026-01-19 04:18:11,363 | INFO     | bot             | Bot modu: fake_money
+2026-01-19 04:18:11,364 | INFO     | bot             | Bot baslatiliyor...
+2026-01-19 04:18:11,364 | INFO     | bot             | Database baslatiliyor...
+2026-01-19 04:18:11,367 | INFO     | bot             | Borsalar baglaniyor...
+2026-01-19 04:18:16,581 | INFO     | bot             | Bakiyeler yukleniyor...
+2026-01-19 04:18:16,583 | INFO     | bot             | Orderbook yoneticisi baslatiliyor...
+2026-01-19 04:18:16,584 | INFO     | bot             | Islem executor'i hazirlaniyor...
+2026-01-19 04:18:16,585 | INFO     | bot             | Risk yoneticisi baslatiliyor...
+2026-01-19 04:18:16,587 | INFO     | bot             | Performans takipcisi baslatiliyor...
+2026-01-19 04:18:16,588 | INFO     | bot             | Stratejiler yukleniyor...
+2026-01-19 04:18:16,588 | INFO     | bot             |   Spot Arbitrage stratejisi aktif
+2026-01-19 04:18:16,589 | INFO     | bot             |   Triangular Arbitrage stratejisi aktif
+2026-01-19 04:18:16,590 | INFO     | bot             | Baslangic bakiyesi: $1000.00
+2026-01-19 04:18:16,591 | INFO     | bot             | Bot basariyla baslatildi!
+2026-01-19 04:18:16,592 | INFO     | bot             | ANA DONGU BASLADI!
+2026-01-19 04:18:16,592 | INFO     | bot             | MAIN LOOP ICINDEYIM!
+2026-01-19 04:18:16,593 | INFO     | bot             | ========== DONGU #1 ==========
+2026-01-19 04:18:33,343 | INFO     | bot             | ========== DONGU #2 ==========
+2026-01-19 04:18:50,875 | INFO     | bot             | ========== DONGU #3 ==========
+2026-01-19 04:19:07,875 | INFO     | bot             | ========== DONGU #4 ==========
+2026-01-19 04:19:25,821 | INFO     | bot             | ========== DONGU #5 ==========
+2026-01-19 04:19:42,682 | INFO     | bot             | ========== DONGU #6 ==========
+2026-01-19 04:19:59,899 | INFO     | bot             | ========== DONGU #7 ==========
+2026-01-19 04:20:06,486 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 04:20:07,307 | INFO     | bot             | ✅ Islem basarili! Net: $-2.8681 | Fees: $0.6240 | Slippage: $1.2866
+2026-01-19 04:20:17,935 | INFO     | bot             | ========== DONGU #8 ==========
+2026-01-19 04:20:34,249 | INFO     | bot             | ========== DONGU #9 ==========
+2026-01-19 04:20:51,638 | INFO     | bot             | ========== DONGU #10 ==========
+2026-01-19 04:20:51,981 | INFO     | bot             | HEARTBEAT bybit GALA/USDT bid=0.00672 ask=0.00673 last=0.00673
+2026-01-19 04:21:08,889 | INFO     | bot             | ========== DONGU #11 ==========
+2026-01-19 04:21:25,547 | INFO     | bot             | ========== DONGU #12 ==========
+2026-01-19 04:21:42,898 | INFO     | bot             | ========== DONGU #13 ==========
+2026-01-19 05:05:31,000 | INFO     | bot             | Bot modu: fake_money
+2026-01-19 05:05:31,000 | INFO     | bot             | Bot baslatiliyor...
+2026-01-19 05:05:31,000 | INFO     | bot             | Database baslatiliyor...
+2026-01-19 05:05:31,010 | INFO     | bot             | Borsalar baglaniyor...
+2026-01-19 05:05:35,989 | INFO     | bot             | Bakiyeler yukleniyor...
+2026-01-19 05:05:35,992 | INFO     | bot             | Orderbook yoneticisi baslatiliyor...
+2026-01-19 05:05:35,994 | INFO     | bot             | Islem executor'i hazirlaniyor...
+2026-01-19 05:05:35,995 | INFO     | bot             | Risk yoneticisi baslatiliyor...
+2026-01-19 05:05:35,996 | INFO     | bot             | Performans takipcisi baslatiliyor...
+2026-01-19 05:05:35,998 | INFO     | bot             | Stratejiler yukleniyor...
+2026-01-19 05:05:35,998 | INFO     | bot             |   Spot Arbitrage stratejisi aktif
+2026-01-19 05:05:36,000 | INFO     | bot             |   Triangular Arbitrage stratejisi aktif
+2026-01-19 05:05:36,001 | INFO     | bot             | Baslangic bakiyesi: $250.00
+2026-01-19 05:05:36,001 | INFO     | bot             | Bot basariyla baslatildi!
+2026-01-19 05:05:36,002 | INFO     | bot             | ANA DONGU BASLADI!
+2026-01-19 05:05:36,003 | INFO     | bot             | MAIN LOOP ICINDEYIM!
+2026-01-19 05:05:36,003 | INFO     | bot             | ========== DONGU #1 ==========
+2026-01-19 05:05:52,298 | INFO     | bot             | ========== DONGU #2 ==========
+2026-01-19 05:06:08,899 | INFO     | bot             | ========== DONGU #3 ==========
+2026-01-19 05:06:25,655 | INFO     | bot             | ========== DONGU #4 ==========
+2026-01-19 05:06:42,554 | INFO     | bot             | ========== DONGU #5 ==========
+2026-01-19 05:06:59,246 | INFO     | bot             | ========== DONGU #6 ==========
+2026-01-19 05:07:15,812 | INFO     | bot             | ========== DONGU #7 ==========
+2026-01-19 05:07:32,450 | INFO     | bot             | ========== DONGU #8 ==========
+2026-01-19 05:07:49,512 | INFO     | bot             | ========== DONGU #9 ==========
+2026-01-19 05:07:56,297 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 05:07:57,133 | INFO     | bot             | ✅ Islem basarili! Net: $-0.3031 | Fees: $0.1562 | Slippage: $0.1250
+2026-01-19 05:08:07,797 | INFO     | bot             | ========== DONGU #10 ==========
+2026-01-19 05:08:08,145 | INFO     | bot             | HEARTBEAT bybit GALA/USDT bid=0.00672 ask=0.00673 last=0.00673
+2026-01-19 05:25:16,320 | INFO     | bot             | Bot modu: fake_money
+2026-01-19 05:25:16,321 | INFO     | bot             | Bot baslatiliyor...
+2026-01-19 05:25:16,321 | INFO     | bot             | Database baslatiliyor...
+2026-01-19 05:25:16,330 | INFO     | bot             | Borsalar baglaniyor...
+2026-01-19 05:25:20,370 | INFO     | bot             | Bakiyeler yukleniyor...
+2026-01-19 05:25:20,372 | INFO     | bot             | Orderbook yoneticisi baslatiliyor...
+2026-01-19 05:25:20,373 | INFO     | bot             | Islem executor'i hazirlaniyor...
+2026-01-19 05:25:20,373 | INFO     | bot             | Risk yoneticisi baslatiliyor...
+2026-01-19 05:25:20,374 | INFO     | bot             | Performans takipcisi baslatiliyor...
+2026-01-19 05:25:20,374 | INFO     | bot             | Stratejiler yukleniyor...
+2026-01-19 05:25:20,375 | INFO     | bot             |   Spot Arbitrage stratejisi aktif
+2026-01-19 05:25:20,375 | INFO     | bot             |   Triangular Arbitrage stratejisi aktif
+2026-01-19 05:25:20,376 | INFO     | bot             | Baslangic bakiyesi: $250.00
+2026-01-19 05:25:20,376 | INFO     | bot             | Bot basariyla baslatildi!
+2026-01-19 05:25:20,377 | INFO     | bot             | ANA DONGU BASLADI!
+2026-01-19 05:25:20,377 | INFO     | bot             | MAIN LOOP ICINDEYIM!
+2026-01-19 05:25:20,377 | INFO     | bot             | ========== DONGU #1 ==========
+2026-01-19 05:25:26,972 | INFO     | bot             |   1 firsat bulundu
+2026-01-19 05:25:27,684 | INFO     | bot             | ✅ Islem basarili! Net: $-0.2200 | Fees: $0.0937 | Slippage: $0.0946
