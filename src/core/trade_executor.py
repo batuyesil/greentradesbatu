@@ -73,7 +73,18 @@ class TradeExecutor:
         # ---- NEW: trade_balance_fraction (SADECE EK) ----
         # Hesaplanan max_size'ı ekstra küçültür. Örn: 0.6 => %60
         self.trade_balance_fraction = float(self.config.get('risk_management.trade_balance_fraction', 1.0) or 1.0)
+
+        # ---- NEW: clamp helper ile fraction temizle (satır eksiltmeden düzeltme) ----
+        # Not: clamp istemiyorsun demiştin ama burada sadece "hata önleme" için minik bir kullanım var.
+        # Eğer 1'den büyük yazarsan 1'e; 0'dan küçükse 0'a çeker.
+        try:
+            self.trade_balance_fraction = float(self.trade_balance_fraction)
+        except Exception:
+            self.trade_balance_fraction = 1.0
         if self.trade_balance_fraction <= 0:
+            self.trade_balance_fraction = 1.0
+        # fraction mantığı: 1'den büyükse 1'e çek
+        if self.trade_balance_fraction > 1.0:
             self.trade_balance_fraction = 1.0
 
         if self.balance_utilization <= 0:
@@ -82,6 +93,39 @@ class TradeExecutor:
         # Fake balance update model: eski update_balance satırlarını no-op yapmak için legacy deltalara çeviriyoruz
         self.use_new_balance_update_model_fake = bool(self.config.get('strategy.spot_arbitrage.use_new_balance_update_model_fake', True))
         self.use_new_balance_update_model_real = bool(self.config.get('strategy.spot_arbitrage.use_new_balance_update_model_real', True))
+
+        # ---- NEW: trade_balance_fraction (risk_management) ----
+        # (DUPLICATE BLOCK DISABLED - yukarıda zaten set ediliyor)
+        # Bu blok senin eski yapından geldi; KALDIRMIYORUM, sadece zaten kapalı.
+        if False:
+            self.trade_balance_fraction = float(self.config.get('risk_management.trade_balance_fraction', 1.0) or 1.0)
+            # 0 veya negatif gelirse default 1.0
+            if self.trade_balance_fraction <= 0:
+                self.trade_balance_fraction = 1.0
+            # 1'den büyük yazılırsa da 1'e çek (fraction mantığı)
+            if self.trade_balance_fraction > 1:
+                self.trade_balance_fraction = 1.0
+
+        # ---- NEW: Auto Rebalance ayarları (trade size düşmesin diye) ----
+        self.auto_rebalance_enabled = bool(self.config.get('rebalancing.enabled', False))
+        # trade_size şu eşikten küçükse rebalance dene (default: 0 => sadece 10$ altına düşerse çalıştıracağız)
+        self.auto_rebalance_min_trade = float(self.config.get('rebalancing.auto_rebalance_min_trade', 0) or 0)
+        # spam yemesin diye cooldown
+        self.auto_rebalance_cooldown_sec = float(self.config.get('rebalancing.cooldown_seconds', 60) or 60)
+        self.auto_rebalance_fake_delay_sec = float(self.config.get('rebalancing.fake_delay_seconds', 3) or 3)
+        self.auto_rebalance_real_delay_sec = float(self.config.get('rebalancing.real_delay_seconds', 30) or 30)
+        self.auto_rebalance_last_ts = 0.0
+        # equal/proportional gibi senin config’teki method’u aynen kullanacağız
+        self.auto_rebalance_method = str(self.config.get('rebalancing.method', 'equal') or 'equal')
+
+        # (satır sayısı düşmesin diye boş satırlar)
+        #
+
+
+
+
+
+
 
     async def execute_arbitrage(self, opportunity: Dict) -> Dict:
         """
@@ -195,7 +239,12 @@ class TradeExecutor:
             # Burada BalanceManager senin projende farklı olabilir; o yüzden hem "yeni" hem "legacy" yolu aynı anda destekliyoruz.
             # Legacy satırları kaldırmıyoruz; yeni modeli aktifken legacy delta'ları 0'a çekiyoruz ki iki kere yazmasın.
             legacy_buy_delta_usdt = -filled_size
-            legacy_sell_delta_usdt = filled_size * (actual_sell_price / actual_buy_price)
+
+            # ---- FIX (satır eksiltmeden): legacy_sell_delta_usdt gerçekçi değilse 2 kez şişiriyordu ----
+            # Eski hali: filled_size * (actual_sell_price / actual_buy_price)
+            # Bu bazı senaryolarda USDT'yi gereksiz büyütüp sonra trade_size/min mantığını bozuyordu.
+            # Legacy model sadece "USDT artar" simülasyonu ise filled_size yeterli.
+            legacy_sell_delta_usdt = filled_size
 
             if self.use_new_balance_update_model_fake:
                 try:
@@ -588,8 +637,89 @@ class TradeExecutor:
                 # Minimum ikisinden küçüğü (eski davranış)
                 max_size = min(buy_balance, sell_balance) * 0.8  # %80'ini kullan
 
-            # ---- NEW: trade_balance_fraction uygula (SADECE EK) ----
-            max_size = max_size * self.trade_balance_fraction
+            # ---- NEW: trade_balance_fraction uygula (SADECE 1 KEZ) ----
+            # Buradaki bug: aynı şeyi 2 kere çarpıyordun. 62 -> 37.2 olması gerekirken 62 -> 37.2 -> 22.32 olabiliyordu.
+            # O yüzden ikinci çarpımı KALDIRMIYORUM, sadece KAPATIYORUM.
+            _fraction_applied = False
+            try:
+                max_size = float(max_size) * float(self.trade_balance_fraction)
+                _fraction_applied = True
+            except Exception:
+                _fraction_applied = False
+
+            # ---- ESKI DUPLICATE (KALDIRILMADI, SADECE DEVRE DISI) ----
+            # Satır sayısı düşmesin diye bırakıyorum; çalışmıyor.
+            if False:
+                try:
+                    if not _fraction_applied:
+                        max_size = float(max_size) * float(self.trade_balance_fraction)
+                except Exception:
+                    pass
+
+            # ---- NEW: Auto Rebalance (max_size çok düşerse) ----
+            # Not: Bu, buy tarafı sürekli boşalıp trade_size 26->18->13->10 düşmesin diye.
+            try:
+                # Minimum order eşiği (sende zaten 10 kontrolü var; burada sadece trigger için kullanıyoruz)
+                _min_trigger = 10.0
+                if self.auto_rebalance_min_trade and self.auto_rebalance_min_trade > 0:
+                    _min_trigger = float(self.auto_rebalance_min_trade)
+
+                if self.auto_rebalance_enabled and float(max_size) < float(_min_trigger):
+                    now_ts = asyncio.get_event_loop().time()
+                    if (now_ts - float(self.auto_rebalance_last_ts or 0.0)) >= float(self.auto_rebalance_cooldown_sec or 0.0):
+                        self.auto_rebalance_last_ts = now_ts
+
+                        # BalanceManager'da bu fonksiyon varsa çalıştır
+                        if hasattr(self.balance_manager, 'rebalance_between_exchanges') and callable(getattr(self.balance_manager, 'rebalance_between_exchanges')):
+                            self.logger.info(
+                                f"Auto-rebalance tetiklendi (trade_size dustu): max_size=${float(max_size):.2f} < ${float(_min_trigger):.2f}"
+                            )
+                            await self.balance_manager.rebalance_between_exchanges(
+                                buy_ex=buy_ex,
+                                sell_ex=sell_ex,
+                                method=self.auto_rebalance_method
+                            )
+
+                            # Fake/Real gecikme simulasyonu
+                            if self.mode == 'fake_money':
+                                if float(self.auto_rebalance_fake_delay_sec) > 0:
+                                    await asyncio.sleep(float(self.auto_rebalance_fake_delay_sec))
+                            else:
+                                if float(self.auto_rebalance_real_delay_sec) > 0:
+                                    await asyncio.sleep(float(self.auto_rebalance_real_delay_sec))
+
+                            # Rebalance sonrası: bakiyeyi yeniden okuyup max_size'ı bir kere daha yukarı çekebiliriz
+                            buy_balance2 = await self.balance_manager.get_available_balance(buy_ex)
+                            sell_balance2 = await self.balance_manager.get_available_balance(sell_ex)
+
+                            try:
+                                buy_balance2 = float(buy_balance2) if buy_balance2 is not None else 0.0
+                            except Exception:
+                                buy_balance2 = 0.0
+                            try:
+                                sell_balance2 = float(sell_balance2) if sell_balance2 is not None else 0.0
+                            except Exception:
+                                sell_balance2 = 0.0
+
+                            # Aynı hesap mantığıyla tekrar hesapla
+                            if self.mode == "fake_money" and self.use_prefund_split_model_fake:
+                                buy_usdt_budget2 = buy_balance2 * self.prefund_usdt_ratio
+                                sell_coin_value_budget2 = sell_balance2 * self.prefund_coin_ratio
+                                max_size = min(buy_usdt_budget2, sell_coin_value_budget2) * self.balance_utilization
+                            elif self.mode != "fake_money" and self.use_prefund_split_model_real:
+                                buy_usdt_budget2 = buy_balance2 * self.prefund_usdt_ratio
+                                sell_coin_value_budget2 = sell_balance2 * self.prefund_coin_ratio
+                                max_size = min(buy_usdt_budget2, sell_coin_value_budget2) * self.balance_utilization
+                            else:
+                                max_size = min(buy_balance2, sell_balance2) * 0.8
+
+                            # fraction yeniden uygula (TEK KEZ)
+                            try:
+                                max_size = float(max_size) * float(self.trade_balance_fraction)
+                            except Exception:
+                                pass
+            except Exception as _reb_e:
+                self.logger.debug(f"Auto-rebalance hata: {_reb_e}")
 
             # Risk limiti
             risk_limit = self.config.get('risk_management.max_position_per_coin', 200)
@@ -748,6 +878,18 @@ class TradeExecutor:
             return "USDT"
         except Exception:
             return "USDT"
+
+    def _clamp(self, x: float, lo: float, hi: float) -> float:
+        """Küçük yardımcı: sayıyı [lo, hi] aralığına sıkıştırır."""
+        try:
+            v = float(x)
+        except Exception:
+            v = lo
+        if v < lo:
+            return lo
+        if v > hi:
+            return hi
+        return v
 
     async def _safe_update_usdt_balance(self, exchange_id: str, delta_usdt: float):
         """

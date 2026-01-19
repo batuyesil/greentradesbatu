@@ -23,3 +23,73 @@
 2026-01-19 05:05:35,992 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
 2026-01-19 05:25:20,371 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
 2026-01-19 05:25:20,371 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 05:38:36,306 | INFO     | balance_manager | Rebalancing çalıştırıldı (placeholder)
+2026-01-19 05:38:50,139 | INFO     | balance_manager | Rebalancing çalıştırıldı (placeholder)
+2026-01-19 06:00:50,072 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 06:00:50,073 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 06:03:43,805 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 06:03:43,805 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 06:04:57,288 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 06:04:57,288 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 06:05:23,459 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 06:05:23,459 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 06:19:05,008 | INFO     | balance_manager | [FAKE REBALANCE] bybit -> okx moved $77.88
+2026-01-19 06:30:30,556 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 06:30:30,557 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 06:50:16,393 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 06:50:16,394 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 06:51:07,391 | INFO     | balance_manager | Rebalancing çalıştırıldı (placeholder)
+2026-01-19 06:52:43,040 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 06:52:43,040 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 07:00:03,692 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 07:00:03,693 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 07:03:05,324 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 07:03:05,324 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 07:10:36,157 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 07:10:36,157 | INFO     | balance_manager |    📊 1 borsa × $250.00 = $250.00
+2026-01-19 07:11:34,919 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 07:11:34,919 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 08:01:41,808 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 08:01:41,809 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 17:04:26,244 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 17:04:26,245 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 17:19:44,831 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 17:19:44,831 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 18:23:20,632 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 18:23:20,633 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 18:24:07,942 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 18:24:07,943 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 18:28:28,784 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 18:28:28,786 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 18:29:40,874 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 18:29:40,875 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 18:32:15,780 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 18:32:15,781 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 18:38:35,878 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 18:38:35,879 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 23:26:43,180 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 23:26:43,181 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 23:29:58,753 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 23:29:58,754 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 23:34:25,408 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 23:34:25,409 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 23:35:52,455 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 23:35:52,455 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 23:39:44,508 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 23:39:44,508 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 23:40:16,447 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 23:40:16,447 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 23:51:18,571 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 23:51:18,572 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-19 23:54:29,049 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-19 23:54:29,049 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-20 02:07:17,645 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-20 02:07:17,645 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-20 02:08:03,587 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-20 02:08:03,587 | INFO     | balance_manager |    📊 2 borsa × $125.00 = $250.00
+2026-01-20 02:09:19,945 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-20 02:09:19,945 | INFO     | balance_manager |    📊 3 borsa × $83.33 = $250.00
+2026-01-20 02:16:17,837 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-20 02:16:17,837 | INFO     | balance_manager |    📊 5 borsa × $50.00 = $250.00
+2026-01-20 02:17:18,190 | INFO     | balance_manager | 💰 Fake money başlatıldı: $250.00 toplam
+2026-01-20 02:17:18,191 | INFO     | balance_manager |    📊 7 borsa × $35.71 = $250.00

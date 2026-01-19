@@ -115,6 +115,38 @@ bybit:
     Funding rate arbitrage
 
 # ========================================
+# BINGX (Tier 2 - Yüksek Spread Potansiyeli)
+# ========================================
+bingx:
+  enabled: true
+  
+  # API Anahtarları (bingx.com > API Management)
+  apiKey: ""  # Buraya API Key gir
+  secret: ""  # Buraya Secret gir
+  
+  # Ayarlar
+  sandbox: false  # Test için true yap
+  testnet_url: "https://open-api-vst.bingx.com"
+  
+  # Özellikler
+  features:
+    spot: true
+    futures: false
+    websocket: true
+  
+  # Komisyonlar
+  fees:
+    maker: 0.0010  # %0.10 maker fee
+    taker: 0.0010  # %0.10 taker fee
+  
+  notes: |
+    Tier 2 borsa - Yüksek spread potansiyeli
+    Fiyat güncellemeleri geç gelir
+    Tier 1 borsalarla arbitraj için ideal
+    VIP 0: %0.10 komisyon
+    Türkiye'den erişilebilir
+
+# ========================================
 # OKX (Geniş seçim)
 # ========================================
 okx:

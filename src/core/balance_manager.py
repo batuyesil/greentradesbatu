@@ -218,3 +218,63 @@ class BalanceManager:
     async def rebalance(self):
         self.logger.info("Rebalancing çalıştırıldı (placeholder)")
         return {"rebalanced": False, "total_moved": 0}
+    
+    
+    async def rebalance_between_exchanges(self, buy_ex: str, sell_ex: str, method: str = "equal") -> dict:
+        """
+        FAKE: USDT'yi borsalar arasında tekrar dengele (transfer simülasyonu)
+        REAL: burada gerçek transfer yapmayacağız (withdraw tehlikeli) -> sadece cache yenilemeye çalışır.
+        """
+        try:
+            method = str(method or "equal").lower()
+
+            if self.mode != "fake_money":
+                # real_money: sadece cache yenile
+                try:
+                    ex1 = self.exchange_manager.exchanges.get(buy_ex)
+                    ex2 = self.exchange_manager.exchanges.get(sell_ex)
+                    if ex1:
+                        self.balances[buy_ex] = await ex1.fetch_balance()
+                    if ex2:
+                        self.balances[sell_ex] = await ex2.fetch_balance()
+                except Exception:
+                    pass
+                return {"rebalanced": False, "mode": "real_money", "moved": 0.0}
+
+            # fake_money: mevcut USDT free değerlerini al
+            buy_free = float(self.get_free(buy_ex, "USDT") or 0.0)
+            sell_free = float(self.get_free(sell_ex, "USDT") or 0.0)
+
+            # Basit ve sağlam yaklaşım:
+            # - Equal: ikisini ortala
+            # - Proportional: şimdilik equal gibi davran (gerekirse sonra genişletiriz)
+            target = (buy_free + sell_free) / 2.0
+
+            # buy tarafı düşükse sell'den buy'a transfer
+            moved = 0.0
+            if buy_free < target and sell_free > target:
+                need = target - buy_free
+                can_give = sell_free - target
+                moved = min(need, can_give)
+            elif sell_free < target and buy_free > target:
+                need = target - sell_free
+                can_give = buy_free - target
+                moved = min(need, can_give)
+                # bu sefer ters yönde
+                if moved > 0:
+                    await self.update_balance(buy_ex, -moved, "USDT")
+                    await self.update_balance(sell_ex, +moved, "USDT")
+                    self.logger.info(f"[FAKE REBALANCE] {buy_ex} -> {sell_ex} moved ${moved:.2f}")
+                    return {"rebalanced": True, "mode": "fake_money", "moved": moved, "from": buy_ex, "to": sell_ex, "target_each": target}
+
+            if moved > 0:
+                await self.update_balance(sell_ex, -moved, "USDT")
+                await self.update_balance(buy_ex, +moved, "USDT")
+                self.logger.info(f"[FAKE REBALANCE] {sell_ex} -> {buy_ex} moved ${moved:.2f}")
+                return {"rebalanced": True, "mode": "fake_money", "moved": moved, "from": sell_ex, "to": buy_ex, "target_each": target}
+
+            return {"rebalanced": False, "mode": "fake_money", "moved": 0.0, "target_each": target}
+
+        except Exception as e:
+            self.logger.error(f"rebalance_between_exchanges error: {e}")
+            return {"rebalanced": False, "error": str(e)}
